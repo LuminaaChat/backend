@@ -10,7 +10,7 @@ import {
 
 export class RegisterDto {
     @ApiProperty({
-        example: 'johndoe@luminaa.chat',
+        example: 'johndoe@wud.chat',
         description: 'Email Address of the User',
     })
     @Trim()

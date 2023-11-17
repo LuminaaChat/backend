@@ -19,7 +19,7 @@ export class User {
     __v: number;
 
     @ApiProperty({
-        example: 'info@luminaa.chat',
+        example: 'info@wud.chat',
         description: 'Username of the User',
     })
     @Prop({ unique: true })

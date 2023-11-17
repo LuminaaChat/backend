@@ -5,7 +5,7 @@ import {User} from "../../user/schemas/user.schema";
 
 export class LoginDto {
     @ApiProperty({
-        example: 'info@luminaa.chat',
+        example: 'info@wud.chat',
         description: 'Email Address of the User',
     })
     @Trim()
