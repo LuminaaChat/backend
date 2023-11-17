@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import {User} from "../user/schemas/user.schema";
+import { User } from '../user/schemas/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,8 @@ export class AuthService {
     constructor() {}
 
     public async register(body: RegisterDto): Promise<User | never> {
-        const { firstName, lastName, roles, email, password }: RegisterDto = body;
+        const { firstName, lastName, roles, email, password }: RegisterDto =
+            body;
         let user: User = await this.userModel.findOne({ where: { email } });
 
         if (user) {
@@ -63,7 +64,10 @@ export class AuthService {
         }
 
         const lastLoginAt = new Date();
-        this.userModel.updateOne({ _id: user._id }, { lastLoginAt: lastLoginAt });
+        this.userModel.updateOne(
+            { _id: user._id },
+            { lastLoginAt: lastLoginAt },
+        );
         user.lastLoginAt = lastLoginAt;
 
         return {
@@ -73,7 +77,10 @@ export class AuthService {
     }
 
     public async refresh(user: User): Promise<{ token: string; user: User }> {
-        this.userModel.updateOne({ _id: user._id }, { lastLoginAt: new Date() });
+        this.userModel.updateOne(
+            { _id: user._id },
+            { lastLoginAt: new Date() },
+        );
 
         return {
             user: user,
