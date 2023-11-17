@@ -16,7 +16,7 @@ import {
     ApiTags,
 } from '@nestjs/swagger';
 import { User } from './schemas/user.schema';
-import {UsersService} from "./user.service";
+import { UsersService } from './user.service';
 
 //@ApiBearerAuth()
 @ApiTags('users')
