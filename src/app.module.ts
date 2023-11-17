@@ -4,7 +4,10 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import {UsersModule} from "./user/user.module";
+import {UserModule} from "./user/user.module";
+import { SocketsGateway } from './sockets/sockets.gateway';
+import { MessagesModule } from './messages/messages.module';
+import {SocketsModule} from "./sockets/sockets.module";
 
 @Module({
     imports: [
@@ -20,10 +23,12 @@ import {UsersModule} from "./user/user.module";
                 autoCreate: true,
             },
         ),
-        UsersModule,
+        UserModule,
         AuthModule,
+        MessagesModule,
+        SocketsModule,
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService, SocketsGateway],
 })
 export class AppModule {}

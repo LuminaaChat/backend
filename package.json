@@ -31,6 +31,7 @@
     "@nestjs/platform-socket.io": "^10.2.9",
     "@nestjs/swagger": "^7.1.16",
     "@nestjs/websockets": "^10.2.9",
+    "@socket.io/admin-ui": "^0.5.1",
     "bcryptjs": "^2.4.3",
     "class-sanitizer": "^1.0.1",
     "class-transformer": "^0.5.1",
