@@ -1,0 +1,300 @@
+openapi: '3.0.2'
+info:
+  title: Olsberg Messaging Service
+  version: '1.0'
+servers:
+  - url: https://olsberg.xyz/
+tags:
+ - name: Chat
+   description: Methods for managing chats
+ - name: Admin
+   description: Admin Endpoint
+ - name: FCM
+   description: Firebase Cloud Messaging
+paths:
+  /admin/user:
+    post:
+      tags:
+        - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/user'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+  /admin/user/{id}:
+    get:
+      tags:
+        - Admin
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+    put:
+      tags:
+       - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/user'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+    delete:
+      tags:
+        - Admin
+      responses:
+        '200':
+          description: OK
+  /admin/group:
+    post:
+      tags:
+        - Admin
+      description: Creates a new group
+      requestBody:
+        description: New Group
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Group name
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/group'
+  /admin/group/{id}:
+    get:
+      tags:
+        - Admin
+      description: List of users in the group
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/group'
+  /admin/group/{id}/users:
+    get:
+      tags:
+        - Admin
+      description: List of users to be added to group
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/groupChat'
+    delete:      
+      tags:
+        - Admin
+      description: List of users to be removed from group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#components/schemas/user'
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user' 
+
+    post:
+      tags:
+        - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#components/schemas/user'
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
+  /admin/group/{id}/groupChats:
+    get:
+      tags:
+        - Admin
+      description: List of group chats to be added to group
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/groupChat'
+    delete:      
+      tags:
+        - Admin
+      description: List of group chats to be removed from group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#components/schemas/groupChat'
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/groupChat' 
+
+    post:
+      tags:
+        - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#components/schemas/groupChat'
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/groupChat'
+  /chat/user/{id}:
+    get:
+      tags:
+        - Chat
+      responses:
+       '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/displayUser'
+  /chat/addressBook:
+    get:
+      tags:
+        - Chat
+      responses:
+        '200':
+          description: List of all employees        
+  /saveFCMToken:
+    post:
+      tags:
+       - FCM
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Firebase Cloud Messaging registration token
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    group:
+      type: object
+      description: Group for living group or case or whatever
+      properties:
+        groupId:
+          type: string
+          description: Group ID
+        groupName:
+          type: string
+          description: Name of the group
+        users:
+          description: List of all users in this group
+          type: array
+          items:
+            $ref: '#components/schemas/user'
+        groupChats:
+          description: List of all group chats related to this group
+          type: array
+          items:
+            $ref: '#components/schemas/groupChat'
+    user:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: User ID
+        displayName:
+          type: string
+          description: User name to be displayed
+        userType:
+          $ref: '#/components/schemas/userType'
+    displayUser:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: User ID
+        displayName:
+          type: string
+          description: User name to be displayed
+        userType:
+          $ref: '#/components/schemas/userType'
+    groupChat:
+      type: object
+      properties:
+        groupChatId:
+          type: string
+          description: id of the group chat
+        users:
+          type: array
+          items:
+            $ref: '#components/schemas/user'
+        mutedUsers:
+          type: array
+          items:
+            $ref: '#components/schemas/user'
+    userType:
+      type: string
+      enum:
+        - employee
+        - client
+        - legalGuardian
+
+
+
