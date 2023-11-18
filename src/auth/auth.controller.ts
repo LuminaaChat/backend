@@ -6,12 +6,10 @@ import {
     ClassSerializerInterceptor,
     UseInterceptors,
     UseGuards,
-    Req,
     Get,
 } from '@nestjs/common';
 import { JwtAuthGuard } from './guards/auth.guard';
 import { AuthService } from './auth.service';
-import { Request } from 'express';
 import {
     ApiBearerAuth,
     ApiOperation,
@@ -21,6 +19,7 @@ import {
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { User } from '../user/schemas/user.schema';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -51,7 +50,7 @@ export class AuthController {
     })
     private login(
         @Body() body: LoginDto,
-    ): Promise<{ token: string; user: User } | never> {
+    ): Promise<{ token: string; user: User }> {
         return this.service.login(body);
     }
 
@@ -64,12 +63,9 @@ export class AuthController {
         description: 'User token was refreshed',
     })
     @UseGuards(JwtAuthGuard)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-
     private refresh(
-        // @ts-ignore
-        @Req() { user }: Request,
-    ): Promise<{ token: string; user: User } | never> {
-        return this.service.refresh(<User>user);
+        @CurrentUser() user: User,
+    ): Promise<{ token: string; user: User }> {
+        return this.service.refresh(user);
     }
 }
