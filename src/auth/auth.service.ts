@@ -6,6 +6,8 @@ import { Model } from 'mongoose';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { User } from '../user/schemas/user.schema';
+import {PinRegisterDto} from "./dto/pin-register.dto";
+import {PinVerifyDto} from "./dto/pin-verify.dto";
 
 @Injectable()
 export class AuthService {
@@ -86,5 +88,17 @@ export class AuthService {
             user: user,
             token: this.helper.generateToken(user),
         };
+    }
+
+    public async pinRegister(
+        body: PinRegisterDto,
+    ): Promise<boolean | never> {
+        return false;
+    }
+
+    public async pinVerify(
+        body: PinVerifyDto,
+    ): Promise<boolean | never> {
+        return false;
     }
 }
