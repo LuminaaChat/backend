@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import {UserModule} from "./user/user.module";
 import { MessagesModule } from './messages/messages.module';
+import { MessageArchModule } from './arch/arch.module';
 import {SocketsModule} from "./sockets/sockets.module";
 import { RoomsModule } from './rooms/rooms.module';
 import { RolesModule } from './roles/roles.module';
@@ -27,6 +28,7 @@ import { RolesModule } from './roles/roles.module';
         UserModule,
         AuthModule,
         MessagesModule,
+        MessageArchModule,
         SocketsModule,
         RoomsModule,
         RolesModule,

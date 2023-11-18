@@ -280,6 +280,19 @@ paths:
       responses:
         '200':
           description: OK
+  /archiveMessages:
+    get:
+      tags:
+       - ARCHIVE
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: start migration of messages to archive
+      responses:
+        '201':
+          description: OK
 components:
   schemas:
     group:
