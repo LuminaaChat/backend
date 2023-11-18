@@ -15,3 +15,9 @@ http://localhost:8081/
 ## local url
 http://localhost:3000/api/v1/
 
+## start single test
+`npm test -- -- src/arch/arch.service.spec.ts`
+
+## SWC builder
+`npm start:swc`
+To speed up the development process (x20 times faster builds), you can use the SWC builder by passing the -b swc flag to the start script, as follows npm run start -- -b swc.

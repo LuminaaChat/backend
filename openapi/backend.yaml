@@ -11,6 +11,8 @@ tags:
    description: Admin Endpoint
  - name: FCM
    description: Firebase Cloud Messaging
+ - name: ARCHIVE
+   description: Message Archive
 paths:
   /admin/user:
     post:
@@ -281,7 +283,7 @@ paths:
         '200':
           description: OK
   /archiveMessages:
-    get:
+    post:
       tags:
        - ARCHIVE
       requestBody:
