@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import {UserModule} from "./user/user.module";
 import { MessagesModule } from './messages/messages.module';
 import {SocketsModule} from "./sockets/sockets.module";
+import { RoomsModule } from './rooms/rooms.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
     imports: [
@@ -26,6 +28,8 @@ import {SocketsModule} from "./sockets/sockets.module";
         AuthModule,
         MessagesModule,
         SocketsModule,
+        RoomsModule,
+        RolesModule,
     ],
     controllers: [AppController],
     providers: [AppService],
