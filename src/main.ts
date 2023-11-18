@@ -12,7 +12,7 @@ async function bootstrap() {
         .setTitle('WUD.Chat')
         .setDescription('The wud.chat API description')
         .setVersion('1.0')
-        .addServer('http://localhost:3000')
+        .addServer('http://localhost:3000/')
         .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);

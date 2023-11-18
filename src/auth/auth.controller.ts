@@ -65,8 +65,9 @@ export class AuthController {
     })
     @UseGuards(JwtAuthGuard)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+
     private refresh(
+        // @ts-ignore
         @Req() { user }: Request,
     ): Promise<{ token: string; user: User } | never> {
         return this.service.refresh(<User>user);

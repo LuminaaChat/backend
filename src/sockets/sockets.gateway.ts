@@ -1,18 +1,20 @@
 import {
+  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
+  WebSocketServer, WsResponse,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import {instrument} from "@socket.io/admin-ui";
+import {SocketMessage} from "./models/socketMessage";
 
 @WebSocketGateway(+process.env.SOCKET_PORT, {
   cors: {
-    origin: ['*', 'https://admin.socket.io'],
-    credentials: true,
+    origin: ['*', 'localhost', 'https://admin.socket.io'],
+    // credentials: true,
   },
   namespace: '/',
 })
@@ -26,9 +28,10 @@ export class SocketsGateway
     console.log(`Start Socket on Port ${process.env.SOCKET_PORT}`);
   }
 
-  @SubscribeMessage('events')
-  handleEvent(@MessageBody() data: string): string {
-    return data;
+  @SubscribeMessage('messages:new')
+  handleMessagesNew(@MessageBody() data: unknown): WsResponse<unknown> {
+    const event = 'messages:new';
+    return { event, data };
   }
 
   handleConnection(socket: Socket) {

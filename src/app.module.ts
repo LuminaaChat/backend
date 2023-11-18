@@ -5,7 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import {UserModule} from "./user/user.module";
-import { SocketsGateway } from './sockets/sockets.gateway';
 import { MessagesModule } from './messages/messages.module';
 import {SocketsModule} from "./sockets/sockets.module";
 
@@ -29,6 +28,6 @@ import {SocketsModule} from "./sockets/sockets.module";
         SocketsModule,
     ],
     controllers: [AppController],
-    providers: [AppService, SocketsGateway],
+    providers: [AppService],
 })
 export class AppModule {}
