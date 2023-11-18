@@ -29,6 +29,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/user'
   /admin/user/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:  
+          type: string
     get:
       tags:
         - Admin
@@ -81,6 +87,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/group'
   /admin/group/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:  
+          type: string
     get:
       tags:
         - Admin
@@ -93,6 +105,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/group'
   /admin/group/{id}/users:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:  
+          type: string
     get:
       tags:
         - Admin
@@ -147,6 +165,12 @@ paths:
                 items:
                   $ref: '#/components/schemas/user'
   /admin/group/{id}/groupChats:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:  
+          type: string
     get:
       tags:
         - Admin
@@ -202,6 +226,12 @@ paths:
       description: Gets the user for the specified id.
       tags:
         - Chat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:  
+            type: string
       responses:
        '200':
           description: OK
