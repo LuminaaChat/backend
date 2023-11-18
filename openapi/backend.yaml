@@ -186,22 +186,20 @@ paths:
         - Admin
       requestBody:
         content:
-          application/json:
+          text/plain::
             schema:
-              type: array
-              items:
-                $ref: '#components/schemas/groupChat'
+              type: string
+              description: Name of the to be created group chat
       responses:
        '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/groupChat'
+                $ref: '#/components/schemas/groupChat'
   /chat/user/{id}:
     get:
+      description: Gets the user for the specified id.
       tags:
         - Chat
       responses:
@@ -211,13 +209,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/displayUser'
-  /chat/addressBook:
+  /chat/groupChats:
     get:
+      description: Gets all group chats for the logged in user.
       tags:
         - Chat
       responses:
         '200':
-          description: List of all employees        
+          description: Group chats of the logged in user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/groupChat'
+  /chat/addressBook:
+    get:
+      description: Returns a list of all employees. This method is only available for users with the type employee.
+      tags:
+        - Chat
+      responses:
+        '200':
+          description: List of all employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/displayUser'
   /saveFCMToken:
     post:
       tags:
@@ -264,6 +283,25 @@ components:
           description: User name to be displayed
         userType:
           $ref: '#/components/schemas/userType'
+    groupChat:
+      type: object
+      properties:
+        groupChatId:
+          type: string
+          description: id of the group chat
+        groupChatName:
+          type: string
+          description: Name of the group chat
+        users:
+          type: array
+          items:
+            type: string
+            description: id of the user
+        mutedUsers:
+          type: array
+          items:
+            type: string
+            description: id of the user
     displayUser:
       type: object
       properties:
@@ -275,20 +313,6 @@ components:
           description: User name to be displayed
         userType:
           $ref: '#/components/schemas/userType'
-    groupChat:
-      type: object
-      properties:
-        groupChatId:
-          type: string
-          description: id of the group chat
-        users:
-          type: array
-          items:
-            $ref: '#components/schemas/user'
-        mutedUsers:
-          type: array
-          items:
-            $ref: '#components/schemas/user'
     userType:
       type: string
       enum:
