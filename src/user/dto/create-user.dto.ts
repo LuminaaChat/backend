@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, IsEmail, IsBoolean } from 'class-validator';
 
 export class CreateUserDto {
     @ApiProperty({
-        example: 'johndoe@wud.chat',
+        example: 'johndoe@luminaa.chat',
         description: 'Username of the User',
     })
     @IsNotEmpty()

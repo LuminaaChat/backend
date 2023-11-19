@@ -9,14 +9,14 @@ async function bootstrap() {
     app.setGlobalPrefix('api/v1');
 
     const config = new DocumentBuilder()
-        .setTitle('WUD.Chat')
-        .setDescription('The wud.chat API description')
+        .setTitle('Luminaa.Chat')
+        .setDescription('The luminaa.chat API description')
         .setVersion('1.0')
         .addServer('http://localhost:3000/')
         .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);
-    fs.writeFileSync('./wud-openapi-spec.json', JSON.stringify(document));
+    fs.writeFileSync('./openapi/luminaa-openapi-spec.json', JSON.stringify(document));
     SwaggerModule.setup('docs', app, document);
 
     app.enableCors();
