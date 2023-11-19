@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateRoomDto {
+export class CreateGroupDto {
     @ApiProperty({
         example: 'Cat Room',
         description: 'Name of the Room',

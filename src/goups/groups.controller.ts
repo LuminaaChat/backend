@@ -13,83 +13,83 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import {RoomsService} from "./rooms.service";
-import {CreateRoomDto} from "./dto/create-room.dto";
-import {Room} from "./schemas/room.schema";
-import {UpdateRoomDto} from "./dto/update-room.dto";
+import {GroupsService} from "./groups.service";
+import {CreateGroupDto} from "./dto/create-group.dto";
+import {Group} from "./schemas/group.schema";
+import {UpdateGroupDto} from "./dto/update-group.dto";
 
 //@ApiBearerAuth()
-@ApiTags('rooms')
-@Controller('rooms')
-export class RoomsController {
-  constructor(private readonly roomsService: RoomsService) {}
+@ApiTags('groups')
+@Controller('groups')
+export class GroupsController {
+  constructor(private readonly GroupsService: GroupsService) {}
 
   @Post()
   // @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create Room' })
+  @ApiOperation({ summary: 'Create Group' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({
     status: 200,
-    description: 'New Room created',
-    type: Room,
+    description: 'New Group created',
+    type: Group,
   })
-  create(@Body() createRoomDto: CreateRoomDto) {
-    return this.roomsService.create(createRoomDto);
+  create(@Body() createGroupDto: CreateGroupDto) {
+    return this.GroupsService.create(createGroupDto);
   }
 
   @Get()
   // @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get all rooms' })
+  @ApiOperation({ summary: 'Get all Groups' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({
     status: 200,
-    description: 'List of all Rooms',
-    type: [Room],
+    description: 'List of all Groups',
+    type: [Group],
   })
   findAll() {
-    return this.roomsService.findAll();
+    return this.GroupsService.findAll();
   }
 
   @Get(':id')
   // @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get Room by ID' })
+  @ApiOperation({ summary: 'Get Group by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Room,
+    type: Group,
   })
   findOne(@Param('id') id: string) {
-    return this.roomsService.findOne(id);
+    return this.GroupsService.findOne(id);
   }
 
   @Patch(':id')
   // @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Update Room by ID' })
+  @ApiOperation({ summary: 'Update Group by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({
     status: 200,
     description: 'Updated',
-    type: Room,
+    type: Group,
   })
-  update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
-    return this.roomsService.update(id, updateRoomDto);
+  update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
+    return this.GroupsService.update(id, updateGroupDto);
   }
 
   @Delete(':id')
   // @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Delete Room by ID' })
+  @ApiOperation({ summary: 'Delete Group by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({
     status: 200,
     description: 'Deleted',
   })
   remove(@Param('id') id: string) {
-    return this.roomsService.remove(id);
+    return this.GroupsService.remove(id);
   }
 }
