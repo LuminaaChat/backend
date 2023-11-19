@@ -1,53 +1,69 @@
 import {
-  ConnectedSocket,
-  MessageBody,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-  SubscribeMessage,
-  WebSocketGateway,
-  WebSocketServer, WsResponse,
+    ConnectedSocket,
+    MessageBody,
+    OnGatewayConnection,
+    OnGatewayDisconnect,
+    SubscribeMessage,
+    WebSocketGateway,
+    WebSocketServer,
+    WsResponse,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import {instrument} from "@socket.io/admin-ui";
-import {SocketMessage} from "./models/socketMessage";
+import { instrument } from '@socket.io/admin-ui';
+import { SocketMessage } from './models/socketMessage';
+import { UsePipes, ValidationPipe } from '@nestjs/common';
 
-@WebSocketGateway(+process.env.SOCKET_PORT, {
-  cors: {
-    origin: ['*', 'localhost', 'https://admin.socket.io'],
-    // credentials: true,
-  },
-  namespace: '/',
+@WebSocketGateway({
+    cors: {
+        origin: [
+            '*',
+            'localhost',
+            'https://admin.socket.io',
+            'https://amritb.github.io',
+        ],
+
+        credentials: true,
+    },
 })
 export class SocketsGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
+    implements OnGatewayConnection, OnGatewayDisconnect
 {
-  @WebSocketServer()
-  server: Server;
+    @WebSocketServer()
+    server: Server;
 
-  constructor() {
-    console.log(`Start Socket on Port ${process.env.SOCKET_PORT}`);
-  }
+    @SubscribeMessage('chat_message')
+    @UsePipes(
+        new ValidationPipe({
+            whitelist: true,
+        }),
+    )
+    handleMessagesNew(
+        @MessageBody() data: SocketMessage,
+        @ConnectedSocket() socket: Socket,
+    ): WsResponse<unknown> {
+        console.log(data);
+        const event = 'chat_message';
+        socket.broadcast.emit(event, data);
+        return { event, data };
+    }
 
-  @SubscribeMessage('messages:new')
-  handleMessagesNew(@MessageBody() data: unknown): WsResponse<unknown> {
-    const event = 'messages:new';
-    return { event, data };
-  }
+    handleConnection(socket: Socket) {
+        console.log(`[SOCKET] Client connected: ${socket.id}`);
+        // console.log(socket);
+        console.log(`[SOCKET] Token: ${socket.handshake?.auth?.token}`);
+    }
 
-  handleConnection(socket: Socket) {
-    console.log(`[SOCKET] Client connected: ${socket.id}`);
-    // console.log(`[SOCKET] SessionID: ${socket.handshake.auth.userID}`);
-    // console.log(`[SOCKET] Token: ${socket.handshake.auth.token}`);
-  }
+    handleDisconnect(client: Socket, ...args: any[]) {
+        console.log(`[SOCKET] Client disconnected: ${client.id}: ${args}`);
+    }
 
-  handleDisconnect(client: Socket, ...args: any[]) {
-    console.log(`[SOCKET] Client disconnected: ${client.id}: ${args}`);
-  }
-
-  async afterInit() {
-    instrument(this.server, {
-      auth: false,
-      mode: 'development',
-    });
-  }
+    async afterInit() {
+        instrument(this.server, {
+            auth: false,
+            mode: 'development',
+        });
+    }
 }
+
+// 6558fac3bb529d4a188f99a1 J. Doe
+// 6558fb27bb529d4a188f99a3 Em. Ployee
