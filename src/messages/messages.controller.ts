@@ -21,8 +21,8 @@ import {
 import { Message } from './schemas/message.schema';
 
 //@ApiBearerAuth()
-@ApiTags('messages')
-@Controller('messages')
+@ApiTags('groups')
+@Controller('/groups/:id/groupchats/:id/messages')
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
