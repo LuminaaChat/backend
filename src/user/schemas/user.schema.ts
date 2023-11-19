@@ -46,6 +46,12 @@ export class User {
     password: string;
 
     @ApiProperty({
+        description: 'PIN of the User',
+    })
+    @Prop({ select: false })
+    pin: string;
+
+    @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
         description: 'Last Login At',
     })

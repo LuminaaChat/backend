@@ -20,6 +20,8 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { User } from '../user/schemas/user.schema';
 import { CurrentUser } from './decorators/current-user.decorator';
+import {PinRegisterDto} from "./dto/pin-register.dto";
+import {PinVerifyDto} from "./dto/pin-verify.dto";
 
 @ApiTags('auth')
 @Controller('auth')
@@ -52,6 +54,34 @@ export class AuthController {
         @Body() body: LoginDto,
     ): Promise<{ token: string; user: User }> {
         return this.service.login(body);
+    }
+
+    @Post('pin/verify')
+    @ApiOperation({ summary: 'Check Pin of user' })
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
+    @ApiResponse({
+        status: 200,
+        description: 'User PIN is right',
+        type: LoginDto,
+    })
+    private pinVerify(
+        @Body() body: PinVerifyDto,
+    ): Promise<boolean | never> {
+        return this.service.pinVerify(body);
+    }
+
+    @Post('pin/register')
+    @ApiOperation({ summary: 'Register Pin for user' })
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
+    @ApiResponse({
+        status: 200,
+        description: 'PIN is registered',
+        type: LoginDto,
+    })
+    private pinRegister(
+        @Body() body: PinRegisterDto,
+    ): Promise<boolean | never> {
+        return this.service.pinRegister(body);
     }
 
     @ApiBearerAuth()
