@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument } from 'mongoose';
 import {User} from "../../user/schemas/user.schema";
+import { GroupChat } from 'src/group-chats/schemas/group-chat.schema';
+import { GroupType } from 'src/group-type/schemas/group-type.schema';
 
 export type GroupDocument = HydratedDocument<Group>;
 
@@ -59,10 +61,10 @@ export class Group {
     roles: string[];
 
     @ApiProperty({
-        description: 'Messages of the Group',
+        description: 'Associated Groupchats of the Group',
     })
-    @Prop()
-    messages: string[];
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'GroupChat'}]})
+    groupChats: GroupChat[];
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
@@ -75,6 +77,31 @@ export class Group {
         description: 'Updated At of the Group',
     })
     updatedAt: Date;
+
+    @ApiProperty({
+        description: 'Type of the group',
+    })
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'GroupType'}]})
+    GroupType: GroupType;
+
+    @ApiProperty({
+        description: 'Colorcode to be used in displaying the Group',
+    })
+    @Prop()
+    color: string;
+
+    @ApiProperty({
+        description: 'Icon to be used in displaying the Group',
+    })
+    @Prop()
+    Icon: string;
+
+    @ApiProperty({
+        description: 'Group is currently enabled',
+    })
+    @Prop()
+    Enabled: boolean;
+
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

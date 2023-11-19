@@ -72,6 +72,12 @@ export class Message {
   })
   @Prop()
   updatedAt: Date;
+
+  @ApiProperty({
+        description: 'Message is currently visible',
+    })
+  @Prop()
+  Visible: boolean;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);

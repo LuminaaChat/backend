@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument } from 'mongoose';
 import {User} from "../../user/schemas/user.schema";
+import {Message} from "../../messages/schemas/message.schema";
 
 export type GroupChatDocument = HydratedDocument<GroupChat>;
 
@@ -61,8 +62,8 @@ export class GroupChat {
     @ApiProperty({
         description: 'Messages of the GroupChat',
     })
-    @Prop()
-    messages: string[];
+    @Prop(({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }] }))
+    messages: Message[];
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
@@ -75,6 +76,12 @@ export class GroupChat {
         description: 'Updated At of the GroupChat',
     })
     updatedAt: Date;
+
+    @ApiProperty({
+        description: 'GroupChat is currently enabled',
+    })
+    @Prop()
+    Enabled: boolean;
 }
 
 export const GroupChatSchema = SchemaFactory.createForClass(GroupChat);
