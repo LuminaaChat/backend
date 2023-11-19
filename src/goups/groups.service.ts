@@ -1,17 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {Room} from "./schemas/room.schema";
-import {UpdateRoomDto} from "./dto/update-room.dto";
-import {CreateRoomDto} from "./dto/create-room.dto";
+import {Group} from "./schemas/group.schema";
+import {UpdateGroupDto} from "./dto/update-group.dto";
+import {CreateGroupDto} from "./dto/create-group.dto";
 
 @Injectable()
-export class RoomsService {
+export class GroupsService {
   constructor(
-      @InjectModel(Room.name) private readonly model: Model<Room>,
+      @InjectModel(Group.name) private readonly model: Model<Group>,
   ) {}
 
-  async create(createDto: CreateRoomDto): Promise<Room> {
+  async create(createDto: CreateGroupDto): Promise<Group> {
     try {
       return await this.model.create(createDto);
     } catch (error) {
@@ -19,15 +19,15 @@ export class RoomsService {
     }
   }
 
-  async findOne(id: string): Promise<Room | null> {
+  async findOne(id: string): Promise<Group | null> {
     try {
       return this.model.findOne({ _id: id });
     } catch (error) {
-      throw new HttpException('Room not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Group not found', HttpStatus.NOT_FOUND);
     }
   }
 
-  async findAll(): Promise<Room[] | null> {
+  async findAll(): Promise<Group[] | null> {
     try {
       return this.model.find().populate('owners').populate('members');
     } catch (error) {
@@ -38,12 +38,12 @@ export class RoomsService {
     }
   }
 
-  async update(id: string, updateDto: UpdateRoomDto): Promise<Room> {
+  async update(id: string, updateDto: UpdateGroupDto): Promise<Group> {
     try {
       await this.model.updateOne({ _id: id }, updateDto);
       return await this.model.findOne({ id });
     } catch (error) {
-      throw new HttpException('Room not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Group not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -51,7 +51,7 @@ export class RoomsService {
     try {
       return await this.model.findByIdAndDelete(id);
     } catch (error) {
-      throw new HttpException('Room not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Group not found', HttpStatus.NOT_FOUND);
     }
   }
 }

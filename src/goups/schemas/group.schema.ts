@@ -3,78 +3,78 @@ import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument } from 'mongoose';
 import {User} from "../../user/schemas/user.schema";
 
-export type RoomDocument = HydratedDocument<Room>;
+export type GroupDocument = HydratedDocument<Group>;
 
 @Schema({ timestamps: true })
-export class Room {
+export class Group {
     @ApiProperty({
         example: '1aa21eb9-42d5-467a-9988-5696bc4bbda6',
-        description: 'ID of the Room',
+        description: 'ID of the Group',
     })
     _id: string;
 
     @ApiProperty({
         example: 23,
-        description: 'Version of the Room',
+        description: 'Version of the Group',
     })
     __v: number;
 
     @ApiProperty({
         example: 'Cat Channel',
-        description: 'Name of the Room',
+        description: 'Name of the Group',
     })
     @Prop()
     name: string;
 
     @ApiProperty({
         example: 'cat-lovers',
-        description: 'Tag of the Room',
+        description: 'Tag of the Group',
     })
     @Prop()
     tag: string;
 
     @ApiProperty({
         example: 'This is a awesome channel for all cat lovers',
-        description: 'Description of the Room',
+        description: 'Description of the Group',
     })
     @Prop()
     description: string;
 
     @ApiProperty({
-        description: 'Owners of the Room',
+        description: 'Owners of the Group',
     })
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
     owners: User[];
 
     @ApiProperty({
-        description: 'Members of the Room',
+        description: 'Members of the Group',
     })
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
     members: User[];
 
     @ApiProperty({
-        description: 'Roles of the Room',
+        description: 'Roles of the Group',
     })
     @Prop()
     roles: string[];
 
     @ApiProperty({
-        description: 'Messages of the Room',
+        description: 'Messages of the Group',
     })
     @Prop()
     messages: string[];
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
-        description: 'Created At of the Room',
+        description: 'Created At of the Group',
     })
     createdAt: Date;
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
-        description: 'Updated At of the Room',
+        description: 'Updated At of the Group',
     })
     updatedAt: Date;
 }
 
-export const RoomSchema = SchemaFactory.createForClass(Room);
+export const GroupSchema = SchemaFactory.createForClass(Group);
