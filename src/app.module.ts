@@ -9,6 +9,7 @@ import { MessagesModule } from './messages/messages.module';
 import {SocketsModule} from "./sockets/sockets.module";
 import { GroupsModule } from './goups/groups.module';
 import { RolesModule } from './roles/roles.module';
+import { GroupChatsModule } from './group-chats/group-chats.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { RolesModule } from './roles/roles.module';
         SocketsModule,
         GroupsModule,
         RolesModule,
+        GroupChatsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
