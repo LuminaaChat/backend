@@ -19,9 +19,8 @@ import { UsePipes, ValidationPipe } from '@nestjs/common';
             '*',
             'localhost',
             'https://admin.socket.io',
-            'https://amritb.github.io',
         ],
-
+        transports: ['websocket'],
         credentials: true,
     },
 })
@@ -30,6 +29,27 @@ export class SocketsGateway
 {
     @WebSocketServer()
     server: Server;
+
+    handleConnection(client: Socket) {
+        console.log(`------------------------`);
+        console.log(`[SOCKET] Client connected: ${client.id}`);
+        //console.log(socket);
+        console.log(`[SOCKET] Token: ${client.handshake?.auth?.token}`);
+        console.log(`[SOCKET] User ID: ${client.handshake?.auth?.userID}`);
+        console.log(`[SOCKET] User Name: ${client.handshake?.auth?.userName}`);
+    }
+
+    handleDisconnect(client: Socket, ...args: any[]) {
+        console.log(`[SOCKET] Client disconnected: ${client.id}: ${args}`);
+        console.log(`------------------------`);
+    }
+
+    async afterInit() {
+        instrument(this.server, {
+            auth: false,
+            mode: 'development',
+        });
+    }
 
     @SubscribeMessage('chat_message')
     @UsePipes(
@@ -47,22 +67,7 @@ export class SocketsGateway
         return { event, data };
     }
 
-    handleConnection(socket: Socket) {
-        console.log(`[SOCKET] Client connected: ${socket.id}`);
-        // console.log(socket);
-        console.log(`[SOCKET] Token: ${socket.handshake?.auth?.token}`);
-    }
 
-    handleDisconnect(client: Socket, ...args: any[]) {
-        console.log(`[SOCKET] Client disconnected: ${client.id}: ${args}`);
-    }
-
-    async afterInit() {
-        instrument(this.server, {
-            auth: false,
-            mode: 'development',
-        });
-    }
 }
 
 // 6558fac3bb529d4a188f99a1 J. Doe
