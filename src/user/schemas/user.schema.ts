@@ -29,14 +29,14 @@ export class User {
         example: 'John',
         description: 'Firstname of the User',
     })
-    @Prop()
+    @Prop({ default: null })
     firstName: string;
 
     @ApiProperty({
         example: 'Doe',
         description: 'Lastname of the User',
     })
-    @Prop()
+    @Prop({ default: null })
     lastName: string;
 
     @ApiProperty({
@@ -48,42 +48,42 @@ export class User {
     @ApiProperty({
         description: 'PIN of the User',
     })
-    @Prop({ select: false })
+    @Prop({ select: false, default: null })
     pin: string;
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
         description: 'Last Login At',
     })
-    @Prop()
+    @Prop({ default: null })
     lastLoginAt: Date;
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
         description: 'Expire Date',
     })
-    @Prop()
+    @Prop({ default: null })
     expire: Date | null;
 
     @ApiProperty({
         example: true,
         description: 'Is Active Status',
     })
-    @Prop()
+    @Prop({ default: false })
     active: boolean;
 
     @ApiProperty({
         example: ['operator', 'employee'],
         description: 'Role of the User',
     })
-    @Prop()
+    @Prop({ default: null })
     roles: string[];
 
     @ApiProperty({
         example: true,
         description: 'Is Email Verified',
     })
-    @Prop()
+    @Prop({ default: false })
     emailVerified: boolean;
 
     @ApiProperty({

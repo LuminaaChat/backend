@@ -11,6 +11,7 @@ export class UsersService {
 
     async create(createDto: CreateUserDto): Promise<User> {
         try {
+            console.log(createDto);
             return await this.model.create(createDto);
         } catch (error) {
             throw new HttpException('Conflict!', HttpStatus.CONFLICT);
