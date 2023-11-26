@@ -74,6 +74,13 @@ export class Message {
   updatedAt: Date;
 
   @ApiProperty({
+    example: '2023-05-19T16:21:28.120Z',
+    description: 'DeleteAt of the Message',
+  })
+  @Prop()
+  deletedAt: Date;
+
+  @ApiProperty({
         description: 'Message is currently visible',
     })
   @Prop()
