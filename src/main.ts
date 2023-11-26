@@ -14,6 +14,7 @@ async function bootstrap() {
         .setVersion('1.0')
         .addServer('http://localhost:3000/')
         .addBearerAuth()
+        .setExternalDoc('Docs Luminaa.Chat', 'https://docs.luminaa.chat')
         .build();
     const document = SwaggerModule.createDocument(app, config);
     fs.writeFileSync('./openapi/luminaa-openapi-spec.json', JSON.stringify(document));

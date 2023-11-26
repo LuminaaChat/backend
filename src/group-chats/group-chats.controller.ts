@@ -19,7 +19,7 @@ import {CreateGroupChatDto} from "./dto/create-group-chat.dto";
 import {UpdateGroupChatDto} from "./dto/update-group-chat.dto";
 
 //@ApiBearerAuth()
-@ApiTags(`groups`)
+@ApiTags(`groupchats`)
 @Controller('/groups/:id/groupchats')
 export class GroupChatsController {
   constructor(private readonly GroupChatsService: GroupChatsService) {}
