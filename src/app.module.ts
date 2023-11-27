@@ -12,6 +12,8 @@ import { RolesModule } from './roles/roles.module';
 import { GroupChatsModule } from './group-chats/group-chats.module';
 import { GroupTypeModule } from './group-type/group-type.module';
 import {EventEmitterModule} from "@nestjs/event-emitter";
+import { DivisionsModule } from './divisions/divisions.module';
+import { ChannelsModule } from './channels/channels.module';
 
 @Module({
     imports: [
@@ -51,6 +53,8 @@ import {EventEmitterModule} from "@nestjs/event-emitter";
         RolesModule,
         GroupChatsModule,
         GroupTypeModule,
+        DivisionsModule,
+        ChannelsModule,
     ],
     controllers: [AppController],
     providers: [AppService],

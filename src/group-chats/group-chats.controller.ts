@@ -22,7 +22,7 @@ import {UpdateGroupChatDto} from "./dto/update-group-chat.dto";
 @ApiTags(`groupchats`)
 @Controller('/groups/:id/groupchats')
 export class GroupChatsController {
-  constructor(private readonly GroupChatsService: GroupChatsService) {}
+  constructor(private readonly groupChatsService: GroupChatsService) {}
 
   @Post()
   // @UseGuards(JwtAuthGuard)
@@ -35,7 +35,7 @@ export class GroupChatsController {
     type: GroupChat,
   })
   create(@Body() createGroupChatDto: CreateGroupChatDto) {
-    return this.GroupChatsService.create(createGroupChatDto);
+    return this.groupChatsService.create(createGroupChatDto);
   }
 
   @Get()
@@ -49,7 +49,7 @@ export class GroupChatsController {
     type: [GroupChat],
   })
   findAll() {
-    return this.GroupChatsService.findAll();
+    return this.groupChatsService.findAll();
   }
 
   @Get(':id')
@@ -63,7 +63,7 @@ export class GroupChatsController {
     type: GroupChat,
   })
   findOne(@Param('id') id: string) {
-    return this.GroupChatsService.findOne(id);
+    return this.groupChatsService.findOne(id);
   }
 
   @Patch(':id')
@@ -77,7 +77,7 @@ export class GroupChatsController {
     type: GroupChat,
   })
   update(@Param('id') id: string, @Body() updateGroupChatDto: UpdateGroupChatDto) {
-    return this.GroupChatsService.update(id, updateGroupChatDto);
+    return this.groupChatsService.update(id, updateGroupChatDto);
   }
 
   @Delete(':id')
@@ -90,6 +90,6 @@ export class GroupChatsController {
     description: 'Deleted',
   })
   remove(@Param('id') id: string) {
-    return this.GroupChatsService.remove(id);
+    return this.groupChatsService.remove(id);
   }
 }
