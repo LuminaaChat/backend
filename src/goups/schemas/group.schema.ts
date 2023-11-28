@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument } from 'mongoose';
-import {User} from "../../user/schemas/user.schema";
-import { GroupChat } from 'src/group-chats/schemas/group-chat.schema';
-import { GroupType } from 'src/group-type/schemas/group-type.schema';
+import {Channel} from "../../channels/schemas/channel.schema";
 
 export type GroupDocument = HydratedDocument<Group>;
 
@@ -22,86 +20,73 @@ export class Group {
     __v: number;
 
     @ApiProperty({
-        example: 'Cat Channel',
+        example: '#Allgemein',
         description: 'Name of the Group',
     })
     @Prop()
     name: string;
 
     @ApiProperty({
-        example: 'cat-lovers',
-        description: 'Tag of the Group',
-    })
-    @Prop()
-    tag: string;
-
-    @ApiProperty({
-        example: 'This is a awesome channel for all cat lovers',
+        example: 'Ein Channel für alle',
         description: 'Description of the Group',
     })
-    @Prop()
+    @Prop({ default: null })
     description: string;
 
     @ApiProperty({
-        description: 'Owners of the Group',
+        example: '#123456',
+        description: 'HEX Color of the Group',
     })
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
-    owners: User[];
+    @Prop({ default: null })
+    color: string;
 
     @ApiProperty({
-        description: 'Members of the Group',
+        example: 'pulse',
+        description: 'Icon of the Group',
     })
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
-    members: User[];
+    @Prop({ default: null })
+    icon: string;
 
     @ApiProperty({
-        description: 'Roles of the Group',
+        description: 'Groups of the Group',
     })
-    @Prop()
-    roles: string[];
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Channel' }])
+    channels: Channel[];
 
     @ApiProperty({
-        description: 'Associated Groupchats of the Group',
+        example: 'EMPLOYEE',
+        description: 'Min Role of User for this Channel',
     })
-    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'GroupChat'}]})
-    groupChats: GroupChat[];
+    @Prop({ default: 'SUPERVISOR' })
+    minRole: string;
+
+    @ApiProperty({
+        example: true,
+        description: 'Is this channel currently visible?',
+    })
+    @Prop({ default: true })
+    visible: boolean;
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
         description: 'Created At of the Group',
     })
+    @Prop()
     createdAt: Date;
 
     @ApiProperty({
         example: '2023-05-19T16:21:28.120Z',
         description: 'Updated At of the Group',
     })
+    @Prop()
     updatedAt: Date;
 
     @ApiProperty({
-        description: 'Type of the group',
-    })
-    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'GroupType'}]})
-    GroupType: GroupType;
-
-    @ApiProperty({
-        description: 'Colorcode to be used in displaying the Group',
+        example: '2023-05-19T16:21:28.120Z',
+        description: 'DeleteAt of the Group',
     })
     @Prop()
-    color: string;
-
-    @ApiProperty({
-        description: 'Icon to be used in displaying the Group',
-    })
-    @Prop()
-    Icon: string;
-
-    @ApiProperty({
-        description: 'Group is currently enabled',
-    })
-    @Prop()
-    Enabled: boolean;
-
+    deletedAt: Date;
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

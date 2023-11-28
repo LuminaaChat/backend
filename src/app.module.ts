@@ -9,8 +9,6 @@ import { MessagesModule } from './messages/messages.module';
 import {SocketsModule} from "./sockets/sockets.module";
 import { GroupsModule } from './goups/groups.module';
 import { RolesModule } from './roles/roles.module';
-import { GroupChatsModule } from './group-chats/group-chats.module';
-import { GroupTypeModule } from './group-type/group-type.module';
 import {EventEmitterModule} from "@nestjs/event-emitter";
 import { DivisionsModule } from './divisions/divisions.module';
 import { ChannelsModule } from './channels/channels.module';
@@ -51,8 +49,6 @@ import { ChannelsModule } from './channels/channels.module';
         SocketsModule,
         GroupsModule,
         RolesModule,
-        GroupChatsModule,
-        GroupTypeModule,
         DivisionsModule,
         ChannelsModule,
     ],

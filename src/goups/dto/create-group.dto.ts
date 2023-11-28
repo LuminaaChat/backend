@@ -1,39 +1,54 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import {IsArray, IsBoolean, IsNotEmpty, IsString} from 'class-validator';
 
 export class CreateGroupDto {
     @ApiProperty({
-        example: 'Cat Room',
-        description: 'Name of the Room',
+        example: 'Stationär',
+        description: 'Name of the Group',
     })
     @IsNotEmpty()
+    @IsString()
     name: string;
 
     @ApiProperty({
-        example: 'cat-lovers',
-        description: 'Tag of the Room',
+        example: 'Ein Channel für alle',
+        description: 'Description of the Group',
     })
-    @IsNotEmpty()
-    tag: string;
-
-    @ApiProperty({
-        example: 'This is a awesome channel for all cat lovers',
-        description: 'Description of the Room',
-    })
+    @IsString()
     description: string;
 
     @ApiProperty({
-        description: 'Owners of the Room',
+        example: '#123456',
+        description: 'HEX Color of the Group',
     })
-    owners: string[];
+    @IsString()
+    color: string;
 
     @ApiProperty({
-        description: 'Members of the Room',
+        example: 'pulse',
+        description: 'Icon of the Group',
     })
-    members: string[];
+    @IsString()
+    icon: string;
 
     @ApiProperty({
-        description: 'Roles of the Room',
+        description: 'Channels of the Group',
     })
-    roles: string[];
+    @IsArray()
+    @IsString()
+    channels: string[];
+
+    @ApiProperty({
+        example: 'EMPLOYEE',
+        description: 'Min Role of User for this Group',
+    })
+    @IsString()
+    minRole: string;
+
+    @ApiProperty({
+        example: true,
+        description: 'Is this Group currently visible?',
+    })
+    @IsBoolean()
+    visible: boolean;
 }
