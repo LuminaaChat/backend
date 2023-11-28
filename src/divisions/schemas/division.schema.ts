@@ -30,21 +30,21 @@ export class Division {
         example: 'Ein Channel für alle',
         description: 'Description of the Division',
     })
-    @Prop()
+    @Prop({ default: null })
     description: string;
 
     @ApiProperty({
         example: '#123456',
         description: 'HEX Color of the Division',
     })
-    @Prop()
+    @Prop({ default: null })
     color: string;
 
     @ApiProperty({
         example: 'pulse',
         description: 'Icon of the Division',
     })
-    @Prop()
+    @Prop({ default: null })
     icon: string;
 
     @ApiProperty({
@@ -57,14 +57,14 @@ export class Division {
         example: 'EMPLOYEE',
         description: 'Min Role of User for this Channel',
     })
-    @Prop()
+    @Prop({ default: 'SUPERVISOR' })
     minRole: string;
 
     @ApiProperty({
         example: true,
         description: 'Is this channel currently visible?',
     })
-    @Prop()
+    @Prop({ default: true })
     visible: boolean;
 
     @ApiProperty({

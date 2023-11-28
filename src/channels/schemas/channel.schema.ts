@@ -70,7 +70,7 @@ export class Channel {
         example: 'EMPLOYEE',
         description: 'Min Role of User for this Channel',
     })
-    @Prop({ default: 'ADMIN' })
+    @Prop({ default: 'SUPERVISOR' })
     minRole: string;
 
     @ApiProperty({
