@@ -10,19 +10,19 @@ export class CreateMessageDto {
   message: string;
 
   @ApiProperty({
-    description: 'Sender of the Config',
+    description: 'Sender of the Message',
   })
   @IsNotEmpty()
   sender: string;
 
   @ApiProperty({
-    description: 'Receiver of the Config',
+    description: 'Receiver of the Message',
   })
   @IsNotEmpty()
   receiver: string;
 
   @ApiProperty({
-    example: 'Channel | Direct',
+    example: 'NORMAL',
     description: 'Type of the Message',
   })
   @IsNotEmpty()

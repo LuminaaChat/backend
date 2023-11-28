@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument } from 'mongoose';
 import {User} from "../../user/schemas/user.schema";
+import {Group} from "../../goups/schemas/group.schema";
 
 export type MessageDocument = HydratedDocument<Message>;
 
@@ -20,7 +21,7 @@ export class Message {
   __v: number;
 
   @ApiProperty({
-    example: 'Hello World',
+    example: 'Hello World!',
     description: 'Message of the Message',
   })
   @Prop()
@@ -39,25 +40,18 @@ export class Message {
   receiver: User;
 
   @ApiProperty({
-    example: 'channel | direct',
-    description: 'Type of the Message',
+    example: 'NORMAL',
+    description: 'Type of this Message',
   })
-  @Prop({ default: 'direct' })
+  @Prop({ default: 'NORMAL' })
   type: string;
 
   @ApiProperty({
-    example: '2023-05-19T16:21:28.120Z',
-    description: 'Delivered At of the Message',
+    example: true,
+    description: 'Is this Message currently visible?',
   })
-  @Prop({ default: null })
-  deliveredAt: Date;
-
-  @ApiProperty({
-    example: '2023-05-19T16:21:28.120Z',
-    description: 'Seen At of the Message',
-  })
-  @Prop({ default: null })
-  seenAt: Date;
+  @Prop({ default: true })
+  visible: boolean;
 
   @ApiProperty({
     example: '2023-05-19T16:21:28.120Z',
@@ -81,10 +75,11 @@ export class Message {
   deletedAt: Date;
 
   @ApiProperty({
-        description: 'Message is currently visible',
-    })
+    example: '2023-05-19T16:21:28.120Z',
+    description: 'SeenAt of the Message',
+  })
   @Prop()
-  Visible: boolean;
+  seenAt: Date;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);
