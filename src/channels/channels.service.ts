@@ -29,7 +29,7 @@ export class ChannelsService {
 
   async findAll(): Promise<Channel[] | null> {
     try {
-      return this.model.find();
+      return this.model.find().populate('owners').populate('members');
     } catch (error) {
       throw new HttpException(
           'Something dont work',

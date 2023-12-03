@@ -32,11 +32,35 @@ export class CreateGroupDto {
     icon: string;
 
     @ApiProperty({
+        example: [],
+        description: 'Owners of the Group',
+    })
+    @IsArray()
+    @IsString()
+    owners: string[];
+
+    @ApiProperty({
+        example: [],
+        description: 'Members of the Group',
+    })
+    @IsArray()
+    @IsString()
+    members: string[];
+
+    @ApiProperty({
+        example: [],
         description: 'Channels of the Group',
     })
     @IsArray()
     @IsString()
     channels: string[];
+
+    @ApiProperty({
+        example: 'afsadf32rsadfe3',
+        description: 'Division of the Group',
+    })
+    @IsString()
+    division: string;
 
     @ApiProperty({
         example: 'EMPLOYEE',

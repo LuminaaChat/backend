@@ -6,7 +6,7 @@ import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger
 import {Channel} from "./schemas/channel.schema";
 
 @ApiTags(`channels`)
-@Controller('channels')
+@Controller('/divisions/:divisionId/groups/:groupId/channels')
 export class ChannelsController {
   constructor(private readonly channelsService: ChannelsService) {}
 

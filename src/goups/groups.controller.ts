@@ -20,7 +20,7 @@ import {UpdateGroupDto} from "./dto/update-group.dto";
 
 //@ApiBearerAuth()
 @ApiTags('groups')
-@Controller('groups')
+@Controller('/divisions/:divisionId/groups')
 export class GroupsController {
   constructor(private readonly GroupsService: GroupsService) {}
 

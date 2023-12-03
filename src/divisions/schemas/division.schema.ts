@@ -2,6 +2,7 @@ import {ApiProperty} from "@nestjs/swagger";
 import mongoose, {HydratedDocument} from "mongoose";
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
 import {Group} from "../../goups/schemas/group.schema";
+import {User} from "../../user/schemas/user.schema";
 
 export type DivisionDocument = HydratedDocument<Division>;
 
@@ -20,32 +21,44 @@ export class Division {
     __v: number;
 
     @ApiProperty({
-        example: '#Allgemein',
+        example: 'Ambulant',
         description: 'Name of the Division',
     })
-    @Prop()
+    @Prop({ unique: true })
     name: string;
 
     @ApiProperty({
-        example: 'Ein Channel für alle',
+        example: 'Ein Bereich für ambulante Mitarbeiter',
         description: 'Description of the Division',
     })
     @Prop({ default: null })
     description: string;
 
     @ApiProperty({
-        example: '#123456',
+        example: '#FF5733',
         description: 'HEX Color of the Division',
     })
     @Prop({ default: null })
     color: string;
 
     @ApiProperty({
-        example: 'pulse',
+        example: 'car',
         description: 'Icon of the Division',
     })
     @Prop({ default: null })
     icon: string;
+
+    @ApiProperty({
+        description: 'Owners of the Division',
+    })
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }])
+    owners: User[];
+
+    @ApiProperty({
+        description: 'Members of the Division',
+    })
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }])
+    members: User[];
 
     @ApiProperty({
         description: 'Groups of the Division',
@@ -54,15 +67,15 @@ export class Division {
     groups: Group[];
 
     @ApiProperty({
-        example: 'EMPLOYEE',
-        description: 'Min Role of User for this Channel',
+        example: 'USER',
+        description: 'Min Role of User for this Division',
     })
-    @Prop({ default: 'SUPERVISOR' })
+    @Prop({ default: 'USER' })
     minRole: string;
 
     @ApiProperty({
         example: true,
-        description: 'Is this channel currently visible?',
+        description: 'Is this Division currently visible?',
     })
     @Prop({ default: true })
     visible: boolean;

@@ -4,16 +4,24 @@ import { Model } from 'mongoose';
 import {Group} from "./schemas/group.schema";
 import {UpdateGroupDto} from "./dto/update-group.dto";
 import {CreateGroupDto} from "./dto/create-group.dto";
+import {EventEmitter2} from "@nestjs/event-emitter";
 
 @Injectable()
 export class GroupsService {
   constructor(
+      private eventEmitter: EventEmitter2,
       @InjectModel(Group.name) private readonly model: Model<Group>,
   ) {}
 
   async create(createDto: CreateGroupDto): Promise<Group> {
     try {
-      return await this.model.create(createDto);
+      const group = await this.model.create(createDto);
+      const event = {
+        divisionId: group.division._id,
+        groupId: group._id,
+      }
+      this.eventEmitter.emit('group.created', event);
+      return group;
     } catch (error) {
       throw new HttpException('Conflict!', HttpStatus.CONFLICT);
     }

@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Query} from '@nestjs/common';
 import { DivisionsService } from './divisions.service';
 import { CreateDivisionDto } from './dto/create-division.dto';
 import { UpdateDivisionDto } from './dto/update-division.dto';
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Division} from "./schemas/division.schema";
 
 @ApiTags(`divisions`)
@@ -20,8 +20,18 @@ export class DivisionsController {
     description: 'New Division created',
     type: Division,
   })
-  create(@Body() createDivisionDto: CreateDivisionDto) {
-    return this.divisionsService.create(createDivisionDto);
+  @ApiQuery({
+    name: "userId",
+    type: String,
+    description: "Compute special devisions for a specific User",
+    required: false
+  })
+  create(@Body() createDivisionDto: CreateDivisionDto, @Query('userId') userId?: string) {
+    if (userId) {
+      return this.divisionsService.createComputed(createDivisionDto);
+    } else {
+      return this.divisionsService.create(createDivisionDto);
+    }
   }
 
   @Get()

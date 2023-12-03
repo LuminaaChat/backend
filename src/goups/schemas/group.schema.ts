@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument } from 'mongoose';
 import {Channel} from "../../channels/schemas/channel.schema";
+import {Division} from "../../divisions/schemas/division.schema";
+import {User} from "../../user/schemas/user.schema";
 
 export type GroupDocument = HydratedDocument<Group>;
 
@@ -46,6 +48,24 @@ export class Group {
     })
     @Prop({ default: null })
     icon: string;
+
+    @ApiProperty({
+        description: 'Division of the Group',
+    })
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Division' })
+    division: Division;
+
+    @ApiProperty({
+        description: 'Owners of the Group',
+    })
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }])
+    owners: User[];
+
+    @ApiProperty({
+        description: 'Members of the Group',
+    })
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }])
+    members: User[];
 
     @ApiProperty({
         description: 'Groups of the Group',

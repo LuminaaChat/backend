@@ -22,7 +22,7 @@ import { Message } from './schemas/message.schema';
 
 //@ApiBearerAuth()
 @ApiTags('messages')
-@Controller('/groups/:id/groupchats/:id/messages')
+@Controller('/divisions/:divisionId/groups/:groupId/channels/:channelId/messages')
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
@@ -36,7 +36,12 @@ export class MessagesController {
     description: 'New Message created',
     type: Message,
   })
-  create(@Body() createMessageDto: CreateMessageDto) {
+  create(@Body() createMessageDto: CreateMessageDto,
+         @Param('divisionId') divisionId: string,
+         @Param('groupId') groupId: string,
+         @Param('channelId') channelId: string) {
+
+
     return this.messagesService.create(createMessageDto);
   }
 

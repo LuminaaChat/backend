@@ -32,6 +32,22 @@ export class CreateChannelDto {
     icon: string;
 
     @ApiProperty({
+        example: 'asdfsadf7897asdf98787asdf',
+        description: 'Division of the Channel',
+    })
+    @IsArray()
+    @IsString()
+    division: string;
+
+    @ApiProperty({
+        example: 'asdfsadf7897asdf98787asdf',
+        description: 'Group of the Channel',
+    })
+    @IsArray()
+    @IsString()
+    group: string;
+
+    @ApiProperty({
         example: 'Hello World',
         description: 'Message of the Channel',
     })
@@ -40,6 +56,7 @@ export class CreateChannelDto {
     messages: string[];
 
     @ApiProperty({
+        example: [],
         description: 'Sender of the Channel',
     })
     @IsArray()
@@ -47,6 +64,7 @@ export class CreateChannelDto {
     owners: string[];
 
     @ApiProperty({
+        example: [],
         description: 'Sender of the Channel',
     })
     @IsArray()
