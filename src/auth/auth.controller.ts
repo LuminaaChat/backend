@@ -3,8 +3,6 @@ import {
     Controller,
     Inject,
     Post,
-    ClassSerializerInterceptor,
-    UseInterceptors,
     UseGuards,
     Get,
 } from '@nestjs/common';
@@ -27,7 +25,7 @@ import {PinVerifyDto} from "./dto/pin-verify.dto";
 @Controller('auth')
 export class AuthController {
     @Inject(AuthService)
-    private readonly service: AuthService;
+    private readonly authService: AuthService;
 
     @Post('register')
     @ApiOperation({ summary: 'Register a user' })
@@ -37,9 +35,8 @@ export class AuthController {
         description: 'New User created',
         type: RegisterDto,
     })
-    @UseInterceptors(ClassSerializerInterceptor)
-    private register(@Body() body: RegisterDto): Promise<User | never> {
-        return this.service.register(body);
+    register(@Body() body: RegisterDto): Promise<User | never> {
+        return this.authService.register(body);
     }
 
     @Post('login')
@@ -50,10 +47,10 @@ export class AuthController {
         description: 'User was logedin',
         type: LoginDto,
     })
-    private login(
+    login(
         @Body() body: LoginDto,
     ): Promise<{ token: string; user: User }> {
-        return this.service.login(body);
+        return this.authService.login(body);
     }
 
     @Post('pin/verify')
@@ -64,10 +61,10 @@ export class AuthController {
         description: 'User PIN is right',
         type: LoginDto,
     })
-    private pinVerify(
+    pinVerify(
         @Body() body: PinVerifyDto,
     ): Promise<boolean | never> {
-        return this.service.pinVerify(body);
+        return this.authService.pinVerify(body);
     }
 
     @Post('pin/register')
@@ -78,10 +75,10 @@ export class AuthController {
         description: 'PIN is registered',
         type: LoginDto,
     })
-    private pinRegister(
+    pinRegister(
         @Body() body: PinRegisterDto,
     ): Promise<boolean | never> {
-        return this.service.pinRegister(body);
+        return this.authService.pinRegister(body);
     }
 
     @ApiBearerAuth()
@@ -93,9 +90,9 @@ export class AuthController {
         description: 'User token was refreshed',
     })
     @UseGuards(JwtAuthGuard)
-    private refresh(
+    refresh(
         @CurrentUser() user: User,
     ): Promise<{ token: string; user: User }> {
-        return this.service.refresh(user);
+        return this.authService.refresh(user);
     }
 }

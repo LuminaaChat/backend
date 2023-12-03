@@ -1,46 +1,52 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
 
-import { AuthHelper } from './helpers/auth.helper';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
-import { User } from '../user/schemas/user.schema';
+import {AuthHelper} from './helpers/auth.helper';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
+import {RegisterDto} from './dto/register.dto';
+import {LoginDto} from './dto/login.dto';
+import {User} from '../user/schemas/user.schema';
 import {PinRegisterDto} from "./dto/pin-register.dto";
 import {PinVerifyDto} from "./dto/pin-verify.dto";
 
 @Injectable()
 export class AuthService {
-    @InjectModel(User.name)
-    private readonly userModel: Model<User>;
 
     @Inject(AuthHelper)
-    private readonly helper: AuthHelper;
+    private readonly helper: AuthHelper
 
-    constructor() {}
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>
+
+    constructor( ) {}
 
     public async register(body: RegisterDto): Promise<User | never> {
-        const { firstName, lastName, roles, email, password }: RegisterDto =
-            body;
-        let user: User = await this.userModel.findOne({ where: { email } });
+        try {
 
-        if (user) {
-            throw new HttpException('Conflict', HttpStatus.CONFLICT);
+            const { firstName, lastName, roles, email, password }: RegisterDto = body;
+
+            let user: User = await this.userModel.findOne({ where: { email } });
+
+            if (user) {
+                throw new HttpException('Conflict', HttpStatus.CONFLICT);
+            }
+
+            const newUser = new User();
+
+            newUser.firstName = firstName;
+            newUser.lastName = lastName;
+            newUser.email = email;
+            newUser.roles = roles;
+            newUser.emailVerified = false;
+            newUser.lastLoginAt = null;
+            newUser.expire = null;
+            newUser.active = true;
+            newUser.password = this.helper.encodePassword(password);
+
+            return await this.userModel.create(newUser);
+        } catch (e) {
+            throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        user = new User();
-
-        user.firstName = firstName;
-        user.lastName = lastName;
-        user.email = email;
-        user.roles = roles;
-        user.emailVerified = false;
-        user.lastLoginAt = null;
-        user.expire = null;
-        user.active = true;
-        user.password = this.helper.encodePassword(password);
-
-        return this.userModel.create(user);
     }
 
     public async login(
