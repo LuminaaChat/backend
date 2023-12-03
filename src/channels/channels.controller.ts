@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards} from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { UpdateChannelDto } from './dto/update-channel.dto';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Channel} from "./schemas/channel.schema";
+import {JwtAuthGuard} from "../auth/guards/auth.guard";
 
 @ApiTags(`channels`)
 @Controller('/divisions/:divisionId/groups/:groupId/channels')
@@ -11,7 +12,7 @@ export class ChannelsController {
   constructor(private readonly channelsService: ChannelsService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Channel' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -25,7 +26,7 @@ export class ChannelsController {
   }
 
   @Get()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all Channel' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -39,7 +40,7 @@ export class ChannelsController {
   }
 
   @Get(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get Channel by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -53,7 +54,7 @@ export class ChannelsController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Channel by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -67,7 +68,7 @@ export class ChannelsController {
   }
 
   @Delete(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Channel by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

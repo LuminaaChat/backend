@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -17,6 +18,7 @@ import {GroupsService} from "./groups.service";
 import {CreateGroupDto} from "./dto/create-group.dto";
 import {Group} from "./schemas/group.schema";
 import {UpdateGroupDto} from "./dto/update-group.dto";
+import {JwtAuthGuard} from "../auth/guards/auth.guard";
 
 //@ApiBearerAuth()
 @ApiTags('groups')
@@ -25,7 +27,7 @@ export class GroupsController {
   constructor(private readonly GroupsService: GroupsService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Group' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -39,7 +41,7 @@ export class GroupsController {
   }
 
   @Get()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all Groups' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -53,7 +55,7 @@ export class GroupsController {
   }
 
   @Get(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get Group by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -67,7 +69,7 @@ export class GroupsController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Group by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -81,7 +83,7 @@ export class GroupsController {
   }
 
   @Delete(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Group by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

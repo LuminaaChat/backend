@@ -5,7 +5,7 @@ import {
     Body,
     Patch,
     Param,
-    Delete,
+    Delete, UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,6 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { User } from './schemas/user.schema';
 import { UsersService } from './user.service';
+import {JwtAuthGuard} from "../auth/guards/auth.guard";
 
 //@ApiBearerAuth()
 @ApiTags('users')
@@ -25,7 +26,7 @@ export class UsersController {
     constructor(private readonly entityService: UsersService) {}
 
     @Post()
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Create user' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -39,7 +40,7 @@ export class UsersController {
     }
 
     @Get()
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Get all users' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -53,7 +54,7 @@ export class UsersController {
     }
 
     @Get(':id')
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Get user by ID' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -67,7 +68,7 @@ export class UsersController {
     }
 
     @Patch(':id')
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Update User by ID' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -81,7 +82,7 @@ export class UsersController {
     }
 
     @Delete(':id')
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Delete User by ID' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })

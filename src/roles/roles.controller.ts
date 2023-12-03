@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -17,6 +17,7 @@ import {RolesService} from "./roles.service";
 import {CreateRoleDto} from "./dto/create-role.dto";
 import {UpdateRoleDto} from "./dto/update-role.dto";
 import {Role} from "./schemas/role.schema";
+import {JwtAuthGuard} from "../auth/guards/auth.guard";
 
 //@ApiBearerAuth()
 @ApiTags(`roles`)
@@ -25,7 +26,7 @@ export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Role' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -39,7 +40,7 @@ export class RolesController {
   }
 
   @Get()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all GroupChats' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -53,7 +54,7 @@ export class RolesController {
   }
 
   @Get(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get Role by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -67,7 +68,7 @@ export class RolesController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Role by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -81,7 +82,7 @@ export class RolesController {
   }
 
   @Delete(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Role by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

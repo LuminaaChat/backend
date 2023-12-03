@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Query,
-  Delete,
+  Delete, UseGuards,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
@@ -19,6 +19,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Message } from './schemas/message.schema';
+import {JwtAuthGuard} from "../auth/guards/auth.guard";
 
 //@ApiBearerAuth()
 @ApiTags('messages')
@@ -27,7 +28,7 @@ export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create message' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -46,7 +47,7 @@ export class MessagesController {
   }
 
   @Get()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all messages' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -73,7 +74,7 @@ export class MessagesController {
   }
 
   @Get(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get Message by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -87,7 +88,7 @@ export class MessagesController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Message by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -101,7 +102,7 @@ export class MessagesController {
   }
 
   @Delete(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Message by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

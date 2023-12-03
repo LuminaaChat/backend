@@ -1,9 +1,10 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Query} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards} from '@nestjs/common';
 import { DivisionsService } from './divisions.service';
 import { CreateDivisionDto } from './dto/create-division.dto';
 import { UpdateDivisionDto } from './dto/update-division.dto';
 import {ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Division} from "./schemas/division.schema";
+import {JwtAuthGuard} from "../auth/guards/auth.guard";
 
 @ApiTags(`divisions`)
 @Controller('divisions')
@@ -11,7 +12,7 @@ export class DivisionsController {
   constructor(private readonly divisionsService: DivisionsService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Division' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -35,7 +36,7 @@ export class DivisionsController {
   }
 
   @Get()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all Division' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -49,7 +50,7 @@ export class DivisionsController {
   }
 
   @Get(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get Division by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -63,7 +64,7 @@ export class DivisionsController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Division by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -77,7 +78,7 @@ export class DivisionsController {
   }
 
   @Delete(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Division by ID' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
