@@ -54,6 +54,8 @@ export class AuthController {
     }
 
     @Post('pin/verify')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Check Pin of user' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     @ApiResponse({
@@ -68,6 +70,8 @@ export class AuthController {
     }
 
     @Post('pin/register')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Register Pin for user' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     @ApiResponse({
@@ -81,18 +85,17 @@ export class AuthController {
         return this.authService.pinRegister(body);
     }
 
-    @ApiBearerAuth()
+
     @Get('refresh')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @ApiOperation({ summary: 'Refresh a user token' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     @ApiResponse({
         status: 200,
         description: 'User token was refreshed',
     })
-    @UseGuards(JwtAuthGuard)
-    refresh(
-        @CurrentUser() user: User,
-    ): Promise<{ token: string; user: User }> {
+    refresh( @CurrentUser() user: User,): Promise<{ token: string; user: User }> {
         return this.authService.refresh(user);
     }
 }
