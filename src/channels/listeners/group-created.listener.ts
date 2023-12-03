@@ -6,11 +6,7 @@ import {ChannelsService} from "../channels.service";
 import {Group} from "../../goups/schemas/group.schema";
 import {OnEvent} from "@nestjs/event-emitter";
 import {CreateChannelDto} from "../dto/create-channel.dto";
-
-class GroupCreatedEvent {
-    divisionId: string;
-    groupId: string;
-}
+import {GroupCreatedEvent} from "../../goups/events/group-created.event";
 
 @Injectable()
 export class GroupCreatedListener {
