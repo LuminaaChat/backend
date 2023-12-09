@@ -15,3 +15,7 @@ http://localhost:8081/
 ## local url
 http://localhost:3000/api/v1/
 
+
+
+### Helper
+- https://github.com/nest-ionic-examples/03-chat-with-auth/blob/master/README.adoc

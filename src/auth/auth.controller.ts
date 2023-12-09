@@ -95,7 +95,7 @@ export class AuthController {
         status: 200,
         description: 'User token was refreshed',
     })
-    refresh( @CurrentUser() user: User,): Promise<{ token: string; user: User }> {
+    refresh( @CurrentUser() user: User): Promise<{ token: string; user: User }> {
         return this.authService.refresh(user);
     }
 }
