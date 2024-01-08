@@ -1,11 +1,4 @@
-import {
-    Body,
-    Controller,
-    Inject,
-    Post,
-    UseGuards,
-    Get,
-} from '@nestjs/common';
+import { Body, Controller, Inject, Post, UseGuards, Get } from '@nestjs/common';
 import { JwtAuthGuard } from './guards/auth.guard';
 import { AuthService } from './auth.service';
 import {
@@ -18,8 +11,8 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { User } from '../user/schemas/user.schema';
 import { CurrentUser } from './decorators/current-user.decorator';
-import {PinRegisterDto} from "./dto/pin-register.dto";
-import {PinVerifyDto} from "./dto/pin-verify.dto";
+import { PinRegisterDto } from './dto/pin-register.dto';
+import { PinVerifyDto } from './dto/pin-verify.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -47,9 +40,7 @@ export class AuthController {
         description: 'User was logedin',
         type: LoginDto,
     })
-    login(
-        @Body() body: LoginDto,
-    ): Promise<{ token: string; user: User }> {
+    login(@Body() body: LoginDto): Promise<{ token: string; user: User }> {
         return this.authService.login(body);
     }
 
@@ -63,9 +54,7 @@ export class AuthController {
         description: 'User PIN is right',
         type: LoginDto,
     })
-    pinVerify(
-        @Body() body: PinVerifyDto,
-    ): Promise<boolean | never> {
+    pinVerify(@Body() body: PinVerifyDto): Promise<boolean | never> {
         return this.authService.pinVerify(body);
     }
 
@@ -79,12 +68,9 @@ export class AuthController {
         description: 'PIN is registered',
         type: LoginDto,
     })
-    pinRegister(
-        @Body() body: PinRegisterDto,
-    ): Promise<boolean | never> {
+    pinRegister(@Body() body: PinRegisterDto): Promise<boolean | never> {
         return this.authService.pinRegister(body);
     }
-
 
     @Get('refresh')
     @UseGuards(JwtAuthGuard)
@@ -95,7 +81,7 @@ export class AuthController {
         status: 200,
         description: 'User token was refreshed',
     })
-    refresh( @CurrentUser() user: User): Promise<{ token: string; user: User }> {
+    refresh(@CurrentUser() user: User): Promise<{ token: string; user: User }> {
         return this.authService.refresh(user);
     }
 }

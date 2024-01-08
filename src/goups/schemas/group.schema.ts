@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument } from 'mongoose';
-import {Channel} from "../../channels/schemas/channel.schema";
-import {Division} from "../../divisions/schemas/division.schema";
-import {User} from "../../user/schemas/user.schema";
+import { Channel } from '../../channels/schemas/channel.schema';
+import { Division } from '../../divisions/schemas/division.schema';
+import { User } from '../../user/schemas/user.schema';
 
 export type GroupDocument = HydratedDocument<Group>;
 

@@ -1,7 +1,6 @@
-import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
 
@@ -9,8 +8,11 @@ import { User } from './schemas/user.schema';
 export class UsersService {
     constructor(@InjectModel(User.name) private readonly model: Model<User>) {}
 
-    async create(createDto: CreateUserDto): Promise<null> {
-        throw new HttpException('Conflict: Please use Register Route!', HttpStatus.CONFLICT);
+    async create(): Promise<null> {
+        throw new HttpException(
+            'Conflict: Please use Register Route!',
+            HttpStatus.CONFLICT,
+        );
     }
 
     async findOne(id: string): Promise<User | null> {

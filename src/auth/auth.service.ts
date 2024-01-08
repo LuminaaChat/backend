@@ -1,31 +1,32 @@
-import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
-import {AuthHelper} from './helpers/auth.helper';
-import {InjectModel} from '@nestjs/mongoose';
-import {Model} from 'mongoose';
-import {RegisterDto} from './dto/register.dto';
-import {LoginDto} from './dto/login.dto';
-import {User} from '../user/schemas/user.schema';
-import {PinRegisterDto} from "./dto/pin-register.dto";
-import {PinVerifyDto} from "./dto/pin-verify.dto";
+import { AuthHelper } from './helpers/auth.helper';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { User } from '../user/schemas/user.schema';
+import { PinRegisterDto } from './dto/pin-register.dto';
+import { PinVerifyDto } from './dto/pin-verify.dto';
 
 @Injectable()
 export class AuthService {
-
     @Inject(AuthHelper)
-    private readonly helper: AuthHelper
+    private readonly helper: AuthHelper;
 
     @InjectModel(User.name)
-    private readonly userModel: Model<User>
+    private readonly userModel: Model<User>;
 
-    constructor( ) {}
+    constructor() {}
 
     public async register(body: RegisterDto): Promise<User | never> {
         try {
+            const { firstName, lastName, roles, email, password }: RegisterDto =
+                body;
 
-            const { firstName, lastName, roles, email, password }: RegisterDto = body;
-
-            let user: User = await this.userModel.findOne({ where: { email } });
+            const user: User = await this.userModel.findOne({
+                where: { email },
+            });
 
             if (user) {
                 throw new HttpException('Conflict', HttpStatus.CONFLICT);
@@ -73,14 +74,11 @@ export class AuthService {
 
         const lastLoginAt = new Date();
 
-
-
         user.lastLoginAt = lastLoginAt;
 
-        await this.userModel.updateOne(
-            {_id: user._id},
-            {lastLoginAt: lastLoginAt},
-        ).exec();
+        await this.userModel
+            .updateOne({ _id: user._id }, { lastLoginAt: lastLoginAt })
+            .exec();
 
         return {
             user: user,
@@ -100,15 +98,13 @@ export class AuthService {
         };
     }
 
-    public async pinRegister(
-        body: PinRegisterDto,
-    ): Promise<boolean | never> {
+    public async pinRegister(body: PinRegisterDto): Promise<boolean | never> {
+        console.log(body);
         return false;
     }
 
-    public async pinVerify(
-        body: PinVerifyDto,
-    ): Promise<boolean | never> {
+    public async pinVerify(body: PinVerifyDto): Promise<boolean | never> {
+        console.log(body);
         return false;
     }
 }

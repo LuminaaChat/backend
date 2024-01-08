@@ -5,7 +5,8 @@ import {
     Body,
     Patch,
     Param,
-    Delete, UseGuards,
+    Delete,
+    UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,7 +18,7 @@ import {
 } from '@nestjs/swagger';
 import { User } from './schemas/user.schema';
 import { UsersService } from './user.service';
-import {JwtAuthGuard} from "../auth/guards/auth.guard";
+import { JwtAuthGuard } from '../auth/guards/auth.guard';
 
 //@ApiBearerAuth()
 @ApiTags('users')

@@ -3,18 +3,18 @@ import { RolesController } from './roles.controller';
 import { RolesService } from './roles.service';
 
 describe('RolesController', () => {
-  let controller: RolesController;
+    let controller: RolesController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [RolesController],
-      providers: [RolesService],
-    }).compile();
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            controllers: [RolesController],
+            providers: [RolesService],
+        }).compile();
 
-    controller = module.get<RolesController>(RolesController);
-  });
+        controller = module.get<RolesController>(RolesController);
+    });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+    it('should be defined', () => {
+        expect(controller).toBeDefined();
+    });
 });

@@ -1,12 +1,12 @@
-import {Injectable} from "@nestjs/common";
-import {InjectModel} from "@nestjs/mongoose";
-import {Division} from "../../divisions/schemas/division.schema";
-import {Model} from "mongoose";
-import {ChannelsService} from "../channels.service";
-import {Group} from "../../goups/schemas/group.schema";
-import {OnEvent} from "@nestjs/event-emitter";
-import {CreateChannelDto} from "../dto/create-channel.dto";
-import {GroupCreatedEvent} from "../../goups/events/group-created.event";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Division } from '../../divisions/schemas/division.schema';
+import { Model } from 'mongoose';
+import { ChannelsService } from '../channels.service';
+import { Group } from '../../goups/schemas/group.schema';
+import { OnEvent } from '@nestjs/event-emitter';
+import { CreateChannelDto } from '../dto/create-channel.dto';
+import { GroupCreatedEvent } from '../../goups/events/group-created.event';
 
 @Injectable()
 export class GroupCreatedListener {
@@ -22,23 +22,20 @@ export class GroupCreatedListener {
     async handleGroupCreatedEvent(event: GroupCreatedEvent) {
         console.log('[EVENT] [group.created] EventData: ', event);
         try {
-            const division = await this.divisionModel.findOne({ _id: event.divisionId });
+            const division = await this.divisionModel.findOne({
+                _id: event.divisionId,
+            });
             const group = await this.groupModel.findOne({ _id: event.groupId });
-
-            const newChannel = new CreateChannelDto();
-            newChannel.name = 'Allgemein';
-            newChannel.description = 'Ein Channel für alle';
-            newChannel.color = group.color;
-            newChannel.icon = group.icon;
-            newChannel.division = division._id;
-            // @ts-ignore
-            newChannel.members = group.members;
-            // @ts-ignore
-            newChannel.owners = group.owners;
-            newChannel.minRole = group.minRole;
-            newChannel.visible = group.visible;
-
-            const channel = await this.channelsService.create(newChannel);
+            const channel = await this.channelsService.create({
+                name: 'Allgemein',
+                color: group.color,
+                icon: group.icon,
+                division: division._id,
+                members: group.members,
+                owners: group.owners,
+                minRole: group.minRole,
+                visible: group.visible
+            } as any);
             group.channels.push(channel);
             group.save();
         } catch (e) {

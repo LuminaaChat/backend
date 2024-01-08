@@ -1,9 +1,9 @@
 export class Chat {
-  id: string;
-  members: string[];
+    id: string;
+    members: string[];
 
-  constructor(id: string) {
-    this.id = id;
-    this.members = [];
-  }
+    constructor(id: string) {
+        this.id = id;
+        this.members = [];
+    }
 }

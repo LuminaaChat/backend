@@ -1,8 +1,8 @@
-import {ApiProperty} from "@nestjs/swagger";
-import mongoose, {HydratedDocument} from "mongoose";
-import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
-import {Group} from "../../goups/schemas/group.schema";
-import {User} from "../../user/schemas/user.schema";
+import { ApiProperty } from '@nestjs/swagger';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Group } from '../../goups/schemas/group.schema';
+import { User } from '../../user/schemas/user.schema';
 
 export type DivisionDocument = HydratedDocument<Division>;
 

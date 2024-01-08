@@ -4,12 +4,12 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import {UserModule} from "./user/user.module";
+import { UserModule } from './user/user.module';
 import { MessagesModule } from './messages/messages.module';
-import {SocketsModule} from "./sockets/sockets.module";
+import { SocketsModule } from './sockets/sockets.module';
 import { GroupsModule } from './goups/groups.module';
 import { RolesModule } from './roles/roles.module';
-import {EventEmitterModule} from "@nestjs/event-emitter";
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { DivisionsModule } from './divisions/divisions.module';
 import { ChannelsModule } from './channels/channels.module';
 

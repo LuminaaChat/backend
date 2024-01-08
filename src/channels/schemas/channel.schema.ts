@@ -1,9 +1,9 @@
-import {ApiProperty} from "@nestjs/swagger";
-import mongoose, {HydratedDocument} from "mongoose";
-import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
-import {Message} from "../../messages/schemas/message.schema";
-import {User} from "../../user/schemas/user.schema";
-import {Division} from "../../divisions/schemas/division.schema";
+import { ApiProperty } from '@nestjs/swagger';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Message } from '../../messages/schemas/message.schema';
+import { User } from '../../user/schemas/user.schema';
+import { Division } from '../../divisions/schemas/division.schema';
 
 export type ChannelDocument = HydratedDocument<Channel>;
 

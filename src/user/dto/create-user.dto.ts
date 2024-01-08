@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {IsNotEmpty, IsString, IsEmail, IsBoolean, IsDate, IsArray} from 'class-validator';
-import {Prop} from "@nestjs/mongoose";
+import {
+    IsString,
+    IsEmail,
+} from 'class-validator';
 
 export class CreateUserDto {
     @ApiProperty({
