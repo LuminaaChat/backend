@@ -24,9 +24,7 @@ import { JwtAuthGuard } from '../auth/guards/auth.guard';
 
 //@ApiBearerAuth()
 @ApiTags('messages')
-@Controller(
-    '/divisions/:divisionId/groups/:groupId/channels/:channelId/messages',
-)
+@Controller('messages')
 export class MessagesController {
     constructor(private readonly messagesService: MessagesService) {}
 

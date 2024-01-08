@@ -11,8 +11,15 @@ export class ChannelsService {
         @InjectModel(Channel.name) private readonly model: Model<Channel>,
     ) {}
 
-    async create(createDto: CreateChannelDto): Promise<Channel> {
+    async create(
+        divisionId: string,
+        groupId: string,
+        createDto: CreateChannelDto,
+    ): Promise<Channel> {
         try {
+            console.log('create');
+            console.log('Division ID: ', divisionId);
+            console.log('Group ID: ', groupId);
             return await this.model.create(createDto);
         } catch (error) {
             throw new HttpException('Conflict!', HttpStatus.CONFLICT);
@@ -27,8 +34,14 @@ export class ChannelsService {
         }
     }
 
-    async findAll(): Promise<Channel[] | null> {
+    async findAll(
+        divisionId: string,
+        groupId: string,
+    ): Promise<Channel[] | null> {
         try {
+            console.log('find all');
+            console.log('Division ID: ', divisionId);
+            console.log('Group ID: ', groupId);
             return this.model.find().populate('owners').populate('members');
         } catch (error) {
             throw new HttpException(

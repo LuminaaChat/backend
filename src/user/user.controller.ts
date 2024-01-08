@@ -8,7 +8,6 @@ import {
     Delete,
     UseGuards,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
     ApiBearerAuth,
@@ -36,8 +35,8 @@ export class UsersController {
         description: 'New User created',
         type: User,
     })
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.entityService.create(createUserDto);
+    create() {
+        return this.entityService.create();
     }
 
     @Get()

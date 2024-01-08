@@ -5,7 +5,6 @@ import { Model } from 'mongoose';
 import { ChannelsService } from '../channels.service';
 import { Group } from '../../goups/schemas/group.schema';
 import { OnEvent } from '@nestjs/event-emitter';
-import { CreateChannelDto } from '../dto/create-channel.dto';
 import { GroupCreatedEvent } from '../../goups/events/group-created.event';
 
 @Injectable()
@@ -26,16 +25,20 @@ export class GroupCreatedListener {
                 _id: event.divisionId,
             });
             const group = await this.groupModel.findOne({ _id: event.groupId });
-            const channel = await this.channelsService.create({
-                name: 'Allgemein',
-                color: group.color,
-                icon: group.icon,
-                division: division._id,
-                members: group.members,
-                owners: group.owners,
-                minRole: group.minRole,
-                visible: group.visible
-            } as any);
+            const channel = await this.channelsService.create(
+                division._id,
+                group._id,
+                {
+                    name: 'Allgemein',
+                    color: group.color,
+                    icon: group.icon,
+                    division: division._id,
+                    members: group.members,
+                    owners: group.owners,
+                    minRole: group.minRole,
+                    visible: group.visible,
+                } as any,
+            );
             group.channels.push(channel);
             group.save();
         } catch (e) {

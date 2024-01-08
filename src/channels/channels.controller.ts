@@ -14,6 +14,7 @@ import { UpdateChannelDto } from './dto/update-channel.dto';
 import {
     ApiBearerAuth,
     ApiOperation,
+    ApiQuery,
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
@@ -21,7 +22,7 @@ import { Channel } from './schemas/channel.schema';
 import { JwtAuthGuard } from '../auth/guards/auth.guard';
 
 @ApiTags(`channels`)
-@Controller('/divisions/:divisionId/groups/:groupId/channels')
+@Controller('channels')
 export class ChannelsController {
     constructor(private readonly channelsService: ChannelsService) {}
 
@@ -35,8 +36,18 @@ export class ChannelsController {
         description: 'New Channel created',
         type: Channel,
     })
-    create(@Body() createChannelDto: CreateChannelDto) {
-        return this.channelsService.create(createChannelDto);
+    @ApiQuery({ name: 'divisionId' })
+    @ApiQuery({ name: 'groupId' })
+    create(
+        @Param('divisionId') divisionId: string,
+        @Param('groupId') groupId: string,
+        @Body() createChannelDto: CreateChannelDto,
+    ) {
+        return this.channelsService.create(
+            divisionId,
+            groupId,
+            createChannelDto,
+        );
     }
 
     @Get()
@@ -49,8 +60,13 @@ export class ChannelsController {
         description: 'List of all GroupChats',
         type: [Channel],
     })
-    findAll() {
-        return this.channelsService.findAll();
+    @ApiQuery({ name: 'divisionId' })
+    @ApiQuery({ name: 'groupId' })
+    findAll(
+        @Param('divisionId') divisionId: string,
+        @Param('groupId') groupId: string,
+    ) {
+        return this.channelsService.findAll(divisionId, groupId);
     }
 
     @Get(':id')
