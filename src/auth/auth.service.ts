@@ -72,11 +72,15 @@ export class AuthService {
         }
 
         const lastLoginAt = new Date();
-        this.userModel.updateOne(
-            { _id: user._id },
-            { lastLoginAt: lastLoginAt },
-        );
+
+
+
         user.lastLoginAt = lastLoginAt;
+
+        await this.userModel.updateOne(
+            {_id: user._id},
+            {lastLoginAt: lastLoginAt},
+        ).exec();
 
         return {
             user: user,

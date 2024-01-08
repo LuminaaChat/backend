@@ -22,7 +22,8 @@ import {JwtAuthGuard} from "../auth/guards/auth.guard";
 
 //@ApiBearerAuth()
 @ApiTags('groups')
-@Controller('/divisions/:divisionId/groups')
+// @Controller('/divisions/:divisionId/groups')
+@Controller('groups')
 export class GroupsController {
   constructor(private readonly GroupsService: GroupsService) {}
 

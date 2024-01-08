@@ -37,7 +37,7 @@ export class GroupsService {
 
   async findAll(): Promise<Group[] | null> {
     try {
-      return this.model.find().populate('owners').populate('members');
+      return this.model.find().populate('owners').populate('members').populate('division').populate('channels');
     } catch (error) {
       throw new HttpException(
           'Something dont work',
