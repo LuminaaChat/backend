@@ -15,7 +15,11 @@ http://localhost:8081/
 ## local url
 http://localhost:3000/api/v1/
 
+## Mock Data
 
+Run `localhost:3000/api/v1/mock` to create mock data
+
+Run `localhost:3000/api/v1/mock/delete` to delete mock data
 
 ### Helper
 - https://github.com/nest-ionic-examples/03-chat-with-auth/blob/master/README.adoc
