@@ -10,14 +10,14 @@ import {
 
 export class RegisterDto {
     @ApiProperty({
-        example: 'johndoe@luminaa.chat',
+        example: 'john@luminaa.chat',
         description: 'Email Address of the User',
     })
     @Trim()
     @IsEmail()
     public readonly email: string;
 
-    @ApiProperty({ example: '123456789', description: 'Passwort of the User' })
+    @ApiProperty({ example: 'demo', description: 'Passwort of the User' })
     @IsString()
     @MinLength(8)
     public readonly password: string;

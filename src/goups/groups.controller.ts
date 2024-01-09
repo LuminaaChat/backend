@@ -25,7 +25,7 @@ import { JwtAuthGuard } from '../auth/guards/auth.guard';
 // @Controller('/divisions/:divisionId/groups')
 @Controller('groups')
 export class GroupsController {
-    constructor(private readonly GroupsService: GroupsService) {}
+    constructor(private readonly groupsService: GroupsService) {}
 
     @Post()
     @UseGuards(JwtAuthGuard)
@@ -37,8 +37,11 @@ export class GroupsController {
         description: 'New Group created',
         type: Group,
     })
-    create(@Body() createGroupDto: CreateGroupDto) {
-        return this.GroupsService.create(createGroupDto);
+    create(
+        @Param('groupId') groupId: string,
+        @Body() createGroupDto: CreateGroupDto,
+    ) {
+        return this.groupsService.create(groupId, createGroupDto);
     }
 
     @Get()
@@ -52,7 +55,7 @@ export class GroupsController {
         type: [Group],
     })
     findAll() {
-        return this.GroupsService.findAll();
+        return this.groupsService.findAll();
     }
 
     @Get(':id')
@@ -66,7 +69,7 @@ export class GroupsController {
         type: Group,
     })
     findOne(@Param('id') id: string) {
-        return this.GroupsService.findOne(id);
+        return this.groupsService.findOne(id);
     }
 
     @Patch(':id')
@@ -80,7 +83,7 @@ export class GroupsController {
         type: Group,
     })
     update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
-        return this.GroupsService.update(id, updateGroupDto);
+        return this.groupsService.update(id, updateGroupDto);
     }
 
     @Delete(':id')
@@ -93,6 +96,6 @@ export class GroupsController {
         description: 'Deleted',
     })
     remove(@Param('id') id: string) {
-        return this.GroupsService.remove(id);
+        return this.groupsService.remove(id);
     }
 }

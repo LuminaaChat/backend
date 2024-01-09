@@ -3,9 +3,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Group, GroupSchema } from './schemas/group.schema';
 import { GroupsController } from './groups.controller';
 import { GroupsService } from './groups.service';
-import { DivisionCreatedListener } from './listeners/division-created.listener';
 import { User, UserSchema } from '../user/schemas/user.schema';
 import { Division, DivisionSchema } from '../divisions/schemas/division.schema';
+import { MockCreateListener } from './listeners/mock-create.listener';
+import { MockDeleteListener } from './listeners/mock-delete.listener';
 
 @Module({
     imports: [
@@ -16,6 +17,6 @@ import { Division, DivisionSchema } from '../divisions/schemas/division.schema';
         ]),
     ],
     controllers: [GroupsController],
-    providers: [GroupsService, DivisionCreatedListener],
+    providers: [GroupsService, MockCreateListener, MockDeleteListener],
 })
 export class GroupsModule {}

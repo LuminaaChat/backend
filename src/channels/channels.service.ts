@@ -17,7 +17,7 @@ export class ChannelsService {
         createDto: CreateChannelDto,
     ): Promise<Channel> {
         try {
-            console.log('create');
+            console.log('create Channel');
             console.log('Division ID: ', divisionId);
             console.log('Group ID: ', groupId);
             return await this.model.create(createDto);
@@ -65,6 +65,18 @@ export class ChannelsService {
             return await this.model.findByIdAndDelete(id);
         } catch (error) {
             throw new HttpException('Channel not found', HttpStatus.NOT_FOUND);
+        }
+    }
+
+    async deleteAll(): Promise<void> {
+        try {
+            const entities = await this.model.find().exec();
+
+            for (const entity of entities) {
+                await this.model.deleteOne({ _id: entity._id });
+            }
+        } catch (error) {
+            throw new HttpException('Error', HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -8,6 +8,7 @@ import { JwtStrategy } from './strategies/auth.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '../user/schemas/user.schema';
+import { MockCreateListener } from './listeners/mock-create.listener';
 
 @Module({
     imports: [
@@ -24,6 +25,6 @@ import { User, UserSchema } from '../user/schemas/user.schema';
         ConfigModule,
     ],
     controllers: [AuthController],
-    providers: [AuthService, AuthHelper, JwtStrategy],
+    providers: [AuthService, AuthHelper, JwtStrategy, MockCreateListener],
 })
 export class AuthModule {}

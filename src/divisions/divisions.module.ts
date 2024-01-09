@@ -4,6 +4,8 @@ import { DivisionsController } from './divisions.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Division, DivisionSchema } from './schemas/division.schema';
 import { User, UserSchema } from '../user/schemas/user.schema';
+import { MockCreateListener } from './listeners/mock-create.listener';
+import { MockDeleteListener } from './listeners/mock-delete.listener';
 
 @Module({
     imports: [
@@ -13,6 +15,6 @@ import { User, UserSchema } from '../user/schemas/user.schema';
         ]),
     ],
     controllers: [DivisionsController],
-    providers: [DivisionsService],
+    providers: [DivisionsService, MockCreateListener, MockDeleteListener],
 })
 export class DivisionsModule {}

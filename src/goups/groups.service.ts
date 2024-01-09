@@ -13,15 +13,14 @@ export class GroupsService {
         @InjectModel(Group.name) private readonly model: Model<Group>,
     ) {}
 
-    async create(createDto: CreateGroupDto): Promise<Group> {
+    async create(
+        divisionId: string,
+        createDto: CreateGroupDto,
+    ): Promise<Group> {
         try {
-            const group = await this.model.create(createDto);
-            const event = {
-                divisionId: group.division._id,
-                groupId: group._id,
-            };
-            this.eventEmitter.emit('group.created', event);
-            return group;
+            console.log('create Group');
+            console.log('Division ID: ', divisionId);
+            return await this.model.create(createDto);
         } catch (error) {
             throw new HttpException('Conflict!', HttpStatus.CONFLICT);
         }
@@ -65,6 +64,18 @@ export class GroupsService {
             return await this.model.findByIdAndDelete(id);
         } catch (error) {
             throw new HttpException('Group not found', HttpStatus.NOT_FOUND);
+        }
+    }
+
+    async deleteAll(): Promise<void> {
+        try {
+            const entities = await this.model.find().exec();
+
+            for (const entity of entities) {
+                await this.model.deleteOne({ _id: entity._id });
+            }
+        } catch (error) {
+            throw new HttpException('Error', HttpStatus.NOT_FOUND);
         }
     }
 }

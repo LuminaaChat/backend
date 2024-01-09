@@ -154,4 +154,16 @@ export class MessagesService {
             );
         }
     }
+
+    async deleteAll(): Promise<void> {
+        try {
+            const entities = await this.model.find().exec();
+
+            for (const entity of entities) {
+                await this.model.deleteOne({ _id: entity._id });
+            }
+        } catch (error) {
+            throw new HttpException('Error', HttpStatus.NOT_FOUND);
+        }
+    }
 }
