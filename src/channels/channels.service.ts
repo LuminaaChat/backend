@@ -4,6 +4,7 @@ import { UpdateChannelDto } from './dto/update-channel.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Channel } from './schemas/channel.schema';
+import {User} from "../user/schemas/user.schema";
 
 @Injectable()
 export class ChannelsService {
@@ -35,17 +36,21 @@ export class ChannelsService {
     }
 
     async findAll(
+        currentUser?: User,
         groupId?: string,
     ): Promise<Channel[] | null> {
         try {
-            if (groupId) {
-                return this.model
-                    .find({ group: groupId })
-                    .populate('owners')
-                    .populate('members')
-                    .populate('messages');
-            }
-            return this.model.find().populate('owners').populate('members');
+            let filter = {};
+            if (currentUser)
+                filter = { members: currentUser._id, ...filter };
+            if (groupId)
+                filter = { group: groupId, ...filter };
+
+            return this.model
+                .find({ group: groupId })
+                .populate('owners')
+                .populate('members')
+                .populate('messages');
         } catch (error) {
             throw new HttpException(
                 'Something dont work',

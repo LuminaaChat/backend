@@ -37,27 +37,17 @@ export class GroupsService {
 
     async findAll(currentUser?: User, divisionId?: string): Promise<Group[] | null> {
         try {
-            if (currentUser && divisionId) {
-                return this.model.find({ members: currentUser._id, division: divisionId });
-            } else if (currentUser) {
-                return await this.model.find({ members: currentUser._id })
-                    .populate('owners')
-                    .populate('members')
-                    .populate('division')
-                    .populate('channels');
-            } else if (divisionId) {
-                return await this.model.find({ division: currentUser._id })
-                    .populate('owners')
-                    .populate('members')
-                    .populate('division')
-                    .populate('channels');
-            }
-            return this.model
-                .find()
+            let filter = {};
+            if (currentUser)
+                filter = { members: currentUser._id, ...filter };
+            if (divisionId)
+                filter = { division: divisionId, ...filter };
+
+            return this.model.find(filter)
                 .populate('owners')
                 .populate('members')
                 .populate('division')
-                .populate('channels');
+                .populate('channels')
         } catch (error) {
             throw new HttpException(
                 'Something dont work',

@@ -20,6 +20,8 @@ import {
 } from '@nestjs/swagger';
 import { Channel } from './schemas/channel.schema';
 import { JwtAuthGuard } from '../auth/guards/auth.guard';
+import {CurrentUser} from "../core/decorators/current-user.decorator";
+import {User} from "../user/schemas/user.schema";
 
 @ApiTags(`channels`)
 @Controller('channels')
@@ -62,9 +64,10 @@ export class ChannelsController {
     })
     @ApiQuery({ name: 'groupId', required: false })
     findAll(
+        @CurrentUser() currentUser: User,
         @Query('groupId') groupId?: string,
     ) {
-        return this.channelsService.findAll(groupId);
+        return this.channelsService.findAll(currentUser, groupId);
     }
 
     @Get(':id')

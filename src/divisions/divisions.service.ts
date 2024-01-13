@@ -43,15 +43,12 @@ export class DivisionsService {
 
     async findAll(currentUser?: User): Promise<Division[] | null> {
         try {
-            if (currentUser) {
-                return this.model
-                    .find({ members: currentUser._id })
-                    .populate('owners')
-                    .populate('members')
-                    .populate('groups');
-            }
+            let filter = {};
+            if (currentUser)
+                filter = { members: currentUser._id, ...filter };
+
             return this.model
-                .find()
+                .find(filter)
                 .populate('owners')
                 .populate('members')
                 .populate('groups');
