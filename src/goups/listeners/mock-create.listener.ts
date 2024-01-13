@@ -23,13 +23,13 @@ export class MockCreateListener {
                 await this.service.create(event.division._id, {
                     name: group.name,
                     description: group.description,
-                    color: '#000000',
-                    icon: 'fa fa-users',
+                    color: group.color || '#000000',
+                    icon: group.icon || 'fa fa-hashtag',
                     division: event.division._id,
                     channels: [],
                     members: group.members,
                     owners: group.owners,
-                    minRole: 'employee',
+                    minRole: group.minRole || 'client',
                     visible: true,
                 } as CreateGroupDto);
 

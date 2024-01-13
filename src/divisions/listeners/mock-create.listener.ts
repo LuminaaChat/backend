@@ -19,7 +19,7 @@ export class MockCreateListener {
                 name: 'Ambulant',
                 description: 'Demo Bereich: Ambulant',
                 color: '#000000',
-                icon: 'fa fa-users',
+                icon: 'truck',
                 owners: [
                     event.users.demoUserJohn, // employee,admin
                 ],
@@ -41,6 +41,7 @@ export class MockCreateListener {
                     {
                         name: 'Intern',
                         description: 'Austausch für die Mitarbeiter im Ambulanten Bereich',
+                        icon: 'shield',
                         channels: [
                             {
                                 name: 'Allgemein',
@@ -95,10 +96,12 @@ export class MockCreateListener {
                             event.users.demoUserUte, // employee
                             event.users.demoUserOlaf, // employee
                         ],
+                        minRole: 'employee',
                     },
                     {
                         name: 'Anne',
                         description: 'Fall Anne',
+                        icon: 'briefcase',
                         channels: [
                             {
                                 name: 'Allgemein',
@@ -141,10 +144,12 @@ export class MockCreateListener {
                             event.users.demoUserMartin,// employee
                             event.users.demoUserAnne, // client
                         ],
+                        minRole: 'client',
                     },
                     {
                         name: 'Katarina',
                         description: 'Fall Katarina',
+                        icon: 'briefcase',
                         channels: [
                             {
                                 name: 'Allgemein',
@@ -185,6 +190,7 @@ export class MockCreateListener {
                             event.users.demoUserMartin,// employee
                             event.users.demoUserKatarina, // client
                         ],
+                        minRole: 'client',
                     },
                 ],
                 division: divisionAmbulant,
@@ -196,7 +202,7 @@ export class MockCreateListener {
                 name: 'Stationär',
                 description: 'Demo Bereich: Stationär',
                 color: '#000000',
-                icon: 'fa fa-users',
+                icon: 'house',
                 owners: [
                     event.users.demoUserJohn, // employee,admin
                 ],
@@ -217,8 +223,9 @@ export class MockCreateListener {
                 groups: [
                     {
                         name: 'Intern',
-                        description:
-                            'Austausch für die Mitarbeiter im Stationären Bereich',
+                        description: 'Austausch für die Mitarbeiter im Stationären Bereich',
+                        color: '#000000',
+                        icon: 'shield',
                         channels: [
                             {
                                 name: 'Allgemein',
@@ -273,10 +280,13 @@ export class MockCreateListener {
                             event.users.demoUserUte, // employee
                             event.users.demoUserOlaf, // employee
                         ],
+                        minRole: 'employee',
                     },
                     {
                         name: 'WHG1',
                         description: 'Wohngruppe 1',
+                        color: '#000000',
+                        icon: 'house',
                         channels: [
                             {
                                 name: 'Allgemein',
@@ -329,6 +339,53 @@ export class MockCreateListener {
                             event.users.demoUserUte, // employee
                             event.users.demoUserTim, // client
                         ],
+                        minRole: 'client',
+                    },
+                    {
+                        name: 'WHG2',
+                        description: 'Wohngruppe 2',
+                        color: '#000000',
+                        icon: 'house',
+                        channels: [
+                            {
+                                name: 'Allgemein',
+                                description: 'Allgemeiner Chat',
+                                owners: [
+                                    event.users.demoUserJohn, // employee,admin
+                                    event.users.demoUserBeate, // employee,teamlead
+                                ],
+                                members: [
+                                    event.users.demoUserJohn, // employee,admin
+                                    event.users.demoUserBeate, // employee,teamlead
+                                    event.users.demoUserUte, // employee
+                                    event.users.demoUserOlaf, // employee
+                                    event.users.demoUserJenny, // client
+                                ],
+                            },
+                            {
+                                name: 'Jenny',
+                                description: 'Jennys Chat',
+                                owners: [
+                                    event.users.demoUserJohn, // employee,admin
+                                    event.users.demoUserBeate, // employee,teamlead
+                                ],
+                                members: [
+                                    event.users.demoUserOlaf, // employee
+                                    event.users.demoUserJenny, // client
+                                ],
+                            },
+                        ],
+                        owners: [
+                            event.users.demoUserJohn, // employee,admin
+                            event.users.demoUserBeate, // employee,teamlead
+                        ],
+                        members: [
+                            event.users.demoUserJohn, // employee,admin
+                            event.users.demoUserBeate, // employee,teamlead
+                            event.users.demoUserUte, // employee
+                            event.users.demoUserJenny, // client
+                        ],
+                        minRole: 'client',
                     },
                 ],
                 division: divisionStationaer,
