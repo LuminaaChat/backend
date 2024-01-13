@@ -11,8 +11,8 @@ export class MockCreateListener {
     async handleMockCreateEvent(event: {
         users: any;
         channels: any;
-        members: any;
         owners: any;
+        members: any;
         division: any;
         group: any;
     }) {

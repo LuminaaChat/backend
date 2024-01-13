@@ -70,12 +70,20 @@ export class MockCreateListener {
                 roles: ['employee'],
             });
 
+            const demoUserOlaf = await this.service.register({
+                email: 'olaf@luminaa.chat',
+                firstName: 'Olaf',
+                lastName: 'Graf',
+                password: 'demo',
+                roles: ['employee'],
+            });
+
             const demoUserAnne = await this.service.register({
                 email: 'anne@luminaa.chat',
                 firstName: 'Anne',
                 lastName: 'Schnell',
                 password: 'demo',
-                roles: ['employee'],
+                roles: ['client'],
             });
 
             const demoUserBeate = await this.service.register({
@@ -106,6 +114,7 @@ export class MockCreateListener {
                     demoUserHolger: demoUserHolger,
                     demoUserMartin: demoUserMartin,
                     demoUserAnne: demoUserAnne,
+                    demoUserOlaf: demoUserOlaf,
                 },
             });
         } catch (e) {

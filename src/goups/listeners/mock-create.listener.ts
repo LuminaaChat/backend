@@ -14,8 +14,6 @@ export class MockCreateListener {
     async handleMockCreateEvent(event: {
         users: any;
         groups: any;
-        members: any;
-        owners: any;
         division: any;
     }) {
         console.log('[EVENT] [mock.create.groups] EventData');
