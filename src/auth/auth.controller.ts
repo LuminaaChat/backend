@@ -10,7 +10,7 @@ import {
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { User } from '../user/schemas/user.schema';
-import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUser } from '../core/decorators/current-user.decorator';
 import { PinRegisterDto } from './dto/pin-register.dto';
 import { PinVerifyDto } from './dto/pin-verify.dto';
 

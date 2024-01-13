@@ -21,6 +21,8 @@ import {
 } from '@nestjs/swagger';
 import { Division } from './schemas/division.schema';
 import { JwtAuthGuard } from '../auth/guards/auth.guard';
+import {CurrentUser} from "../core/decorators/current-user.decorator";
+import {User} from "../user/schemas/user.schema";
 
 @ApiTags(`divisions`)
 @Controller('divisions')
@@ -64,8 +66,8 @@ export class DivisionsController {
         description: 'List of all Division',
         type: [Division],
     })
-    findAll() {
-        return this.divisionsService.findAll();
+    findAll(@CurrentUser() currentUser: User) {
+        return this.divisionsService.findAll(currentUser);
     }
 
     @Get(':id')

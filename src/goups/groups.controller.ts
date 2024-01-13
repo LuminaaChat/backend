@@ -19,6 +19,8 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { Group } from './schemas/group.schema';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { JwtAuthGuard } from '../auth/guards/auth.guard';
+import {CurrentUser} from "../core/decorators/current-user.decorator";
+import {User} from "../user/schemas/user.schema";
 
 //@ApiBearerAuth()
 @ApiTags('groups')
@@ -55,9 +57,9 @@ export class GroupsController {
         type: [Group],
     })
     @ApiQuery({ name: 'divisionId', required: false })
-    findAll(@Query('divisionId') divisionId?: string) {
+    findAll(@CurrentUser() currentUser: User, @Query('divisionId') divisionId?: string) {
         console.log('divisionId', divisionId);
-        return this.groupsService.findAll(divisionId);
+        return this.groupsService.findAll(currentUser, divisionId);
     }
 
     @Get(':id')

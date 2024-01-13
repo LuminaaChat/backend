@@ -5,6 +5,7 @@ import { Group } from './schemas/group.schema';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import {User} from "../user/schemas/user.schema";
 
 @Injectable()
 export class GroupsService {
@@ -34,11 +35,18 @@ export class GroupsService {
         }
     }
 
-    async findAll(divisionId?: string): Promise<Group[] | null> {
+    async findAll(currentUser?: User, divisionId?: string): Promise<Group[] | null> {
         try {
-            if (divisionId) {
-                return this.model
-                    .find({ division: divisionId })
+            if (currentUser && divisionId) {
+                return this.model.find({ members: currentUser._id, division: divisionId });
+            } else if (currentUser) {
+                return await this.model.find({ members: currentUser._id })
+                    .populate('owners')
+                    .populate('members')
+                    .populate('division')
+                    .populate('channels');
+            } else if (divisionId) {
+                return await this.model.find({ division: currentUser._id })
                     .populate('owners')
                     .populate('members')
                     .populate('division')

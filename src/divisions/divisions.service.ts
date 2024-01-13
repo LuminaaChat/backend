@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Division } from './schemas/division.schema';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import {User} from "../user/schemas/user.schema";
 
 @Injectable()
 export class DivisionsService {
@@ -40,8 +41,15 @@ export class DivisionsService {
         }
     }
 
-    async findAll(): Promise<Division[] | null> {
+    async findAll(currentUser?: User): Promise<Division[] | null> {
         try {
+            if (currentUser) {
+                return this.model
+                    .find({ members: currentUser._id })
+                    .populate('owners')
+                    .populate('members')
+                    .populate('groups');
+            }
             return this.model
                 .find()
                 .populate('owners')
