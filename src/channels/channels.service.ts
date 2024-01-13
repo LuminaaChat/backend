@@ -35,13 +35,16 @@ export class ChannelsService {
     }
 
     async findAll(
-        divisionId: string,
-        groupId: string,
+        groupId?: string,
     ): Promise<Channel[] | null> {
         try {
-            console.log('find all');
-            console.log('Division ID: ', divisionId);
-            console.log('Group ID: ', groupId);
+            if (groupId) {
+                return this.model
+                    .find({ group: groupId })
+                    .populate('owners')
+                    .populate('members')
+                    .populate('messages');
+            }
             return this.model.find().populate('owners').populate('members');
         } catch (error) {
             throw new HttpException(

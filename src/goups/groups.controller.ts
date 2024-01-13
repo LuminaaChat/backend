@@ -6,11 +6,11 @@ import {
     Patch,
     Param,
     Delete,
-    UseGuards,
+    UseGuards, Query,
 } from '@nestjs/common';
 import {
     ApiBearerAuth,
-    ApiOperation,
+    ApiOperation, ApiQuery,
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
@@ -54,8 +54,10 @@ export class GroupsController {
         description: 'List of all Groups',
         type: [Group],
     })
-    findAll() {
-        return this.groupsService.findAll();
+    @ApiQuery({ name: 'divisionId', required: false })
+    findAll(@Query('divisionId') divisionId?: string) {
+        console.log('divisionId', divisionId);
+        return this.groupsService.findAll(divisionId);
     }
 
     @Get(':id')

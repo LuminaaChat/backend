@@ -34,8 +34,16 @@ export class GroupsService {
         }
     }
 
-    async findAll(): Promise<Group[] | null> {
+    async findAll(divisionId?: string): Promise<Group[] | null> {
         try {
+            if (divisionId) {
+                return this.model
+                    .find({ division: divisionId })
+                    .populate('owners')
+                    .populate('members')
+                    .populate('division')
+                    .populate('channels');
+            }
             return this.model
                 .find()
                 .populate('owners')

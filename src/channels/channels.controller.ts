@@ -6,7 +6,7 @@ import {
     Patch,
     Param,
     Delete,
-    UseGuards,
+    UseGuards, Query,
 } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
@@ -60,13 +60,11 @@ export class ChannelsController {
         description: 'List of all GroupChats',
         type: [Channel],
     })
-    @ApiQuery({ name: 'divisionId' })
-    @ApiQuery({ name: 'groupId' })
+    @ApiQuery({ name: 'groupId', required: false })
     findAll(
-        @Param('divisionId') divisionId: string,
-        @Param('groupId') groupId: string,
+        @Query('groupId') groupId?: string,
     ) {
-        return this.channelsService.findAll(divisionId, groupId);
+        return this.channelsService.findAll(groupId);
     }
 
     @Get(':id')
